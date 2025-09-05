@@ -1,21 +1,29 @@
 {
   "$schema": "https://nitro.margelo.com/nitro.schema.json",
   "cxxNamespace": [
-    "startiosdk"
+    "rnstartiosdk"
   ],
   "ios": {
-    "iosModuleName": "StartIoSdk"
+    "iosModuleName": "RNStartIoSdk"
   },
   "android": {
     "androidNamespace": [
-      "startiosdk"
+      "rnstartiosdk"
     ],
-    "androidCxxLibName": "StartIoSdk"
+    "androidCxxLibName": "RNStartIoSdk"
   },
   "autolinking": {
-    "StartIoSdk": {
-      "swift": "HybridStartIoSdk",
-      "kotlin": "HybridStartIoSdk"
+    "RNStartIoSdk": {
+      "swift": "RNStartIoSdk",
+      "kotlin": "RNStartIoSdk"
+    },
+    "RNStartIoBanner": {
+      "swift": "RNStartIoBanner",
+      "kotlin": "RNStartIoBanner"
+    },
+    "RNStartIoNativeAd": {
+      "swift": "RNStartIoNativeAd",
+      "kotlin": "RNStartIoNativeAd"
     }
   },
   "ignorePaths": [

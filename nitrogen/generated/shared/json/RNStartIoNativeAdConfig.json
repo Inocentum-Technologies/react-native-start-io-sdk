@@ -1,0 +1,11 @@
+{
+  "uiViewClassName": "RNStartIoNativeAd",
+  "supportsRawText": false,
+  "bubblingEventTypes": {},
+  "directEventTypes": {},
+  "validAttributes": {
+    "onLoadAd": true,
+    "onLoadError": true,
+    "hybridRef": true
+  }
+}

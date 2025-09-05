@@ -1,0 +1,16 @@
+{
+  "uiViewClassName": "RNStartIoBanner",
+  "supportsRawText": false,
+  "bubblingEventTypes": {},
+  "directEventTypes": {},
+  "validAttributes": {
+    "format": true,
+    "adTag": true,
+    "onLoadError": true,
+    "onReceiveAd": true,
+    "onFailedToReceiveAd": true,
+    "onImpression": true,
+    "onClick": true,
+    "hybridRef": true
+  }
+}

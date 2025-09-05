@@ -8,16 +8,19 @@
   "react-native": "src/index",
   "source": "src/index",
   "scripts": {
+    "example": "yarn workspace react-native-start-io-sdk-example",
     "typecheck": "tsc --noEmit",
     "clean": "git clean -dfX",
     "release": "semantic-release",
-    "build": "npm run typecheck && bob build",
-    "codegen": "nitro-codegen --logLevel=\"debug\" && npm run build && node post-script.js",
+    "build": "yarn typecheck && bob build",
+    "codegen": "nitro-codegen --logLevel=\"debug\" && yarn build && node post-script.js",
     "postcodegen": "npm --prefix example run pod"
   },
   "keywords": [
     "react-native",
-    "react-native-start-io-sdk"
+    "react-native-start-io-sdk",
+    "startapp",
+    "ad-sdk"
   ],
   "files": [
     "src",
@@ -43,11 +46,11 @@
   "workspaces": [
     "example"
   ],
-  "repository": "https://github.com/abhijitdey/react-native-start-io-sdk.git",
-  "author": "Abhijit Dey",
+  "repository": "https://github.com/Inocentum-Technologies/react-native-start-io-sdk.git",
+  "author": "[Abhijit Dey](https://github.com/InocentumAbhijit) ([Inocentum-Technologies](https://github.com/Inocentum-Technologies))",
   "license": "MIT",
-  "bugs": "https://github.com/abhijitdey/react-native-start-io-sdk/issues",
-  "homepage": "https://github.com/abhijitdey/react-native-start-io-sdk#readme",
+  "bugs": "https://github.com/Inocentum-Technologies/react-native-start-io-sdk/issues",
+  "homepage": "https://github.com/Inocentum-Technologies/react-native-start-io-sdk#readme",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -58,12 +61,12 @@
     "@semantic-release/git": "^10.0.1",
     "@types/jest": "^29.5.12",
     "@types/react": "19.1.0",
+    "conventional-changelog-conventionalcommits": "^9.1.0",
     "nitro-codegen": "^0.29.2",
     "react": "19.1.0",
     "react-native": "0.81.1",
     "react-native-builder-bob": "^0.37.0",
     "react-native-nitro-modules": "^0.29.2",
-    "conventional-changelog-conventionalcommits": "^9.1.0",
     "semantic-release": "^24.2.6",
     "typescript": "5.0.4"
   },
@@ -119,5 +122,6 @@
         }
       ]
     ]
-  }
+  },
+  "packageManager": "yarn@4.9.4"
 }

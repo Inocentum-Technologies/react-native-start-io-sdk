@@ -1,6 +1,6 @@
 #include <jni.h>
-#include "StartIoSdkOnLoad.hpp"
+#include "RNStartIoSdkOnLoad.hpp"
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
-  return margelo::nitro::startiosdk::initialize(vm);
+  return margelo::nitro::rnstartiosdk::initialize(vm);
 }

@@ -10,14 +10,29 @@ const path = require('node:path')
 const { writeFile, readFile } = require('node:fs/promises')
 
 const androidWorkaround = async () => {
- const androidOnLoadFile = path.join(
-   process.cwd(),
-   'nitrogen/generated/android',
-   'StartIoSdkOnLoad.cpp'
- )
- 
- 
- const str = await readFile(androidOnLoadFile, { encoding: 'utf8' })
- await writeFile(androidOnLoadFile, str.replace(/margelo\/nitro\//g, ''))
+  const androidOnLoadFile = path.join(
+    process.cwd(),
+    'nitrogen/generated/android',
+    'RNStartIoSdkOnLoad.cpp'
+  )
+
+  const importIssueClasses = [
+    'HybridRNStartIoBannerManager',
+    'HybridRNStartIoNativeAdManager'
+  ];
+  
+  importIssueClasses.forEach(async className => {
+    let viewManagerFile = path.join(
+      process.cwd(),
+      'nitrogen/generated/android/kotlin/com/margelo/nitro/rnstartiosdk/views',
+      `${className}.kt`
+    )
+
+    let viewManagerStr = await readFile(viewManagerFile, { encoding: 'utf8' })
+    await writeFile(viewManagerFile, viewManagerStr.replace(/com\.margelo\.nitro\.rnstartiosdk\.\*/g, 'com.rnstartiosdk.*'))
+  });
+
+  const str = await readFile(androidOnLoadFile, { encoding: 'utf8' })
+  await writeFile(androidOnLoadFile, str.replace(/margelo\/nitro\//g, ''))
 }
 androidWorkaround()

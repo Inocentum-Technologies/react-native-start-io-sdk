@@ -1,3 +1,13 @@
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["RNStartIoSdk_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["RNStartIoSdk_" + name]).toInteger()
+}
+
+def kotlinVersion = getExtOrDefault("kotlinVersion")
+
 buildscript {
   repositories {
     google()
@@ -6,6 +16,7 @@ buildscript {
 
   dependencies {
     classpath "com.android.tools.build:gradle:8.8.0"
+    classpath "org.jetbrains.kotlin.plugin.compose:org.jetbrains.kotlin.plugin.compose.gradle.plugin:$kotlinVersion"
   }
 }
 
@@ -20,23 +31,16 @@ def isNewArchitectureEnabled() {
 
 apply plugin: "com.android.library"
 apply plugin: 'org.jetbrains.kotlin.android'
-apply from: '../nitrogen/generated/android/StartIoSdk+autolinking.gradle'
+apply from: '../nitrogen/generated/android/RNStartIoSdk+autolinking.gradle'
 apply from: "./fix-prefab.gradle"
+apply plugin: "org.jetbrains.kotlin.plugin.compose"
 
 if (isNewArchitectureEnabled()) {
   apply plugin: "com.facebook.react"
 }
 
-def getExtOrDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["StartIoSdk_" + name]
-}
-
-def getExtOrIntegerDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["StartIoSdk_" + name]).toInteger()
-}
-
 android {
-  namespace "com.startiosdk"
+  namespace "com.rnstartiosdk"
 
   ndkVersion getExtOrDefault("ndkVersion")
   compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
@@ -94,6 +98,7 @@ android {
   buildFeatures {
     buildConfig true
     prefab true
+    compose true
   }
 
   buildTypes {
@@ -137,12 +142,15 @@ dependencies {
 
   // Add a dependency on NitroModules
   implementation project(":react-native-nitro-modules")
+  implementation("com.startapp:inapp-sdk:5.+")
+  implementation 'androidx.compose.runtime:runtime:1.9.0'
+  implementation("androidx.compose.material3:material3:1.3.2")
 }
 
 if (isNewArchitectureEnabled()) {
   react {
     jsRootDir = file("../src/")
-    libraryName = "StartIoSdk"
-    codegenJavaPackageName = "com.startiosdk"
+    libraryName = "RNStartIoSdk"
+    codegenJavaPackageName = "com.rnstartiosdk"
   }
 }
