@@ -22,10 +22,11 @@ Pod::Spec.new do |s|
     "cpp/**/*.{hpp,cpp}",
   ]
 
-  load 'nitrogen/generated/ios/StartIoSdk+autolinking.rb'
+  load 'nitrogen/generated/ios/RNStartIoSdk+autolinking.rb'
   add_nitrogen_files(s)
 
   s.dependency 'React-jsi'
   s.dependency 'React-callinvoker'
+  s.dependency 'StartAppSDK'
   install_modules_dependencies(s)
 end

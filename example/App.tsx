@@ -29,7 +29,7 @@ import {
 } from 'react-native-start-io-sdk';
 
 const ANDROID_APP_ID = '205489527';
-const IOS_APP_ID = 'YOUR_IOS_APP_ID';
+const IOS_APP_ID = '205489527';
 
 // ✅ Initialize SDK
 initializeStartIoSdk({
