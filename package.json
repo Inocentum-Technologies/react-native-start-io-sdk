@@ -8,12 +8,11 @@
   "react-native": "src/index",
   "source": "src/index",
   "scripts": {
-    "example": "yarn workspace react-native-start-io-sdk-example",
     "typecheck": "tsc --noEmit",
     "clean": "git clean -dfX",
     "release": "semantic-release",
-    "build": "yarn typecheck && bob build",
-    "codegen": "nitro-codegen --logLevel=\"debug\" && yarn build && node post-script.js",
+    "build": "npm run typecheck && bob build",
+    "codegen": "nitro-codegen --logLevel=\"debug\" && npm run build && node post-script.js",
     "postcodegen": "npm --prefix example run pod"
   },
   "keywords": [

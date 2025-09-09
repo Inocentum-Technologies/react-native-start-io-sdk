@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android --active-arch-only",
-    "ios": "react-native run-ios --simulator='iPhone 16'",
+    "ios": "react-native run-ios --simulator='iPhone 16 Pro'",
     "lint": "eslint .",
     "start": "react-native start --reset-cache --client-logs",
     "test": "jest",

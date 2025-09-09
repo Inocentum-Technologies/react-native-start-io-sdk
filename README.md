@@ -6,8 +6,6 @@ Start.io (Formerly StartApp) ad SDK for react-native
 [![Downloads](https://img.shields.io/npm/dm/react-native-start-io-sdk.svg)](https://www.npmjs.com/package/react-native-start-io-sdk)
 [![License](https://img.shields.io/npm/l/react-native-start-io-sdk.svg)](https://github.com/patrickkabwe/react-native-start-io-sdk/LICENSE)
 
-> **Android only, for now (iOS integration WIP).**
-
 ## Requirements
 
 - React Native v0.76.0 or higher

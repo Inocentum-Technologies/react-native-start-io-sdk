@@ -5,6 +5,7 @@
 //  Created by Abhijit Dey on 08/09/25.
 //
 
+import Foundation
 import StartApp
 import NitroModules
 

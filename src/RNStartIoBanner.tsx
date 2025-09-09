@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { getHostComponent } from "react-native-nitro-modules";
 import RNStartIoBannerConfig from "../nitrogen/generated/shared/json/RNStartIoBannerConfig.json";
 import { BannerFormat, type RNStartIoBannerMethods, type RNStartIoBannerProps } from "./views/rn-start-io-banner.nitro";
@@ -37,7 +37,7 @@ type PropsType = Omit<RNStartIoBannerProps, "format"> & { style?: ViewStyle };
  * />
  * ```
  */
-const StartIoBannerAd = (props: PropsType) => {
+const StartIoBannerAd = memo((props: PropsType) => {
     return (
         <RNStartIoBanner
             format={BannerFormat.BANNER}
@@ -54,7 +54,7 @@ const StartIoBannerAd = (props: PropsType) => {
             onReceiveAd={{ f: props.onReceiveAd }}
         />
     );
-};
+});
 
 /**
  * Displays a Start.io **MREC (Medium Rectangle)** ad with a fixed size of **300x250** pixels.
@@ -82,7 +82,7 @@ const StartIoBannerAd = (props: PropsType) => {
  * />
  * ```
  */
-const StartIoMrecAd = (props: PropsType) => {
+const StartIoMrecAd = memo((props: PropsType) => {
     return (
         <RNStartIoBanner
             format={BannerFormat.MREC}
@@ -99,7 +99,7 @@ const StartIoMrecAd = (props: PropsType) => {
             onReceiveAd={{ f: props.onReceiveAd }}
         />
     );
-};
+});
 
 /**
  * Displays a Start.io **Cover** ad with a fixed size of **300x157** pixels.
@@ -127,10 +127,10 @@ const StartIoMrecAd = (props: PropsType) => {
  * />
  * ```
  */
-const StartIoCoverAd = (props: PropsType) => {
+const StartIoCoverAd = memo((props: PropsType) => {
     return (
         <RNStartIoBanner
-            format={BannerFormat.MREC}
+            format={BannerFormat.COVER}
             {...props}
             style={{
                 width: 300,
@@ -144,6 +144,6 @@ const StartIoCoverAd = (props: PropsType) => {
             onReceiveAd={{ f: props.onReceiveAd }}
         />
     );
-};
+});
 
 export { StartIoBannerAd, StartIoCoverAd, StartIoMrecAd };

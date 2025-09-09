@@ -107,7 +107,7 @@ const App: React.FC = () => {
         </View>
 
         {/* MREC Ad Example */}
-        {/* <View style={styles.card}>
+        <View style={styles.card}>
           <Text style={styles.cardTitle}>MREC (300x250)</Text>
           <StartIoMrecAd
             adTag="example_mrec"
@@ -118,10 +118,10 @@ const App: React.FC = () => {
             onFailedToReceiveAd={() => console.log('MREC failed')}
             style={{ alignSelf: 'center', marginVertical: 8 }}
           />
-        </View> */}
+        </View>
 
         {/* Cover Ad Example */}
-        {/* <View style={styles.card}>
+        <View style={styles.card}>
           <Text style={styles.cardTitle}>Cover (300x157)</Text>
           <StartIoCoverAd
             adTag="example_cover"
@@ -132,7 +132,7 @@ const App: React.FC = () => {
             onFailedToReceiveAd={() => console.log('Cover failed')}
             style={{ alignSelf: 'center', marginVertical: 8 }}
           />
-        </View> */}
+        </View>
 
         {/* Native Ad Example */}
         <View style={styles.card}>
@@ -169,7 +169,7 @@ const App: React.FC = () => {
             )}
 
             {/* Absolutely-positioned overlay to capture native clicks */}
-            {/* <StartIoNativeAd
+            <StartIoNativeAd
               onLoadAd={(data) => {
                 setNativeAdData(data);
                 console.log('Native ad loaded', data);
@@ -177,7 +177,7 @@ const App: React.FC = () => {
               onLoadError={(err) => {
                 console.log('Native ad error', err);
               }}
-            /> */}
+            />
           </View>
         </View>
 
@@ -187,14 +187,14 @@ const App: React.FC = () => {
 
       {/* Fixed Banner at bottom */}
       <View style={styles.bannerBar}>
-        {/* <StartIoBannerAd
+        <StartIoBannerAd
           adTag="example_banner_bottom"
           onReceiveAd={() => console.log('Banner received')}
           onImpression={() => console.log('Banner impression')}
           onClick={() => console.log('Banner clicked')}
           onLoadError={(err) => console.log('Banner load error', err)}
           onFailedToReceiveAd={() => console.log('Banner failed')}
-        /> */}
+        />
       </View>
     </View>
   );
