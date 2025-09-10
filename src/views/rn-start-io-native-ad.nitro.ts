@@ -15,7 +15,7 @@ export interface NativeAdDetails {
     /** Description of the ad */
     description: string;
 
-    /** Rating of the ad in the Google Play store (range: 1–5) */
+    /** Rating of the ad in the Google Play / iOS App Store (range: 1–5) */
     rating: number;
 
     /** URL of the ad's main image, based on selected size */
@@ -24,16 +24,24 @@ export interface NativeAdDetails {
     /** URL of the ad's secondary icon image */
     secondaryImageUrl?: string;
 
-    /** Number of installs in the Google Play store */
+    /** 
+     * Number of installs in the Google Play store 
+     * 
+     * **Android Only**
+     */
     installs: string;
 
-    /** Category of the ad in the Google Play store */
+    /** Category of the ad in the Google Play / iOS App Store */
     category: string;
 
-    /** Package name of the advertised app (e.g., "com.startapp.quicksearchbox") */
+    /** 
+     * Package name of the advertised app (e.g., "com.startapp.quicksearchbox") 
+     * 
+     * **Android Only**
+     */
     packageName: string;
 
-    /** Action to perform when the ad is clicked (e.g., Launch app or open Google Play) */
+    /** Action to perform when the ad is clicked (e.g., Launch app or open Google Play / App Store) */
     campaignAction: CampaignAction;
 
     /** Text to display on the "call to action" button or area */

@@ -39,7 +39,7 @@ This must be called **once** before loading or showing any ads.
 - `androidAppId` (**required**) — Your Start.io application ID for Android.
 - `iOSAppId` (**required**) — Your Start.io application ID for iOS.
 - `testAd?` — Optional. Set to `true` to load test ads instead of live ads. Default: `false`.
-- `returnAd?` — Optional. Set to `false` to disable return ads (ads shown when returning to the app). Default: `true`.
+- `returnAd?` — (**deprecated**) Optional. Set to `false` to disable return ads (ads shown when returning to the app). Default: `true`.
 
 **Example:**
 ```tsx

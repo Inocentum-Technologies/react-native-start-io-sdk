@@ -24,6 +24,7 @@ export interface InitializeSdkParams {
     androidAppId: string;
     iOSAppId: string;
     testAd?: boolean;
+    /** @deprecated */
     returnAd?: boolean;
 }
 
