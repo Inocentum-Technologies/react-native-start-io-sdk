@@ -8,7 +8,9 @@ module.exports = {
             '@semantic-release/commit-analyzer',
             {
                 preset: 'conventionalcommits',
-                // No releaseRules: always release regardless of commit type
+                releaseRules: [
+                    { release: 'patch' },
+                ],
             },
         ],
         [
