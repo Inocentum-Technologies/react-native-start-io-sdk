@@ -8,11 +8,11 @@ Start.io (Formerly StartApp) ad SDK for react-native
 
 ## Requirements
 
-- React Native v0.76.0 or higher
+- React Native v0.78.0 or higher
 - Node 18.0.0 or higher
 
-> [!IMPORTANT]  
-> To Support `Nitro Views` you need to install React Native version v0.78.0 or higher.
+> [!note]
+> Since **react-native-start-io-sdk** is built with [Nitro Views](https://nitro.margelo.com/docs/hybrid-views), it requires the [new architecture](https://reactnative.dev/architecture/landing-page) to be enabled.
 
 ## Installation
 
@@ -26,6 +26,10 @@ yarn add react-native-start-io-sdk react-native-nitro-modules
 or
 ```bash
 pnpm add react-native-start-io-sdk react-native-nitro-modules
+```
+then
+```
+cd ios && pod install
 ```
 
 ## Usage Guide
