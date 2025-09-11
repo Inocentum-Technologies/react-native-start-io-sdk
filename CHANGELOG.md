@@ -1,1 +1,15 @@
 ## [0.1.1](https://github.com/Inocentum-Technologies/react-native-start-io-sdk/compare/v0.1.0...v0.1.1) (2025-09-11)
+
+####  Initial release with [Start.io](https://www.start.io/) (Formerly StartApp) `com.startapp:inapp-sdk:5.+` for Android and `StartAppSDK v4.10.5` for iOS.
+
+> Features
+- Interstitial Ads
+    - Automatic
+    - Fullscreen
+    - Video
+    -  Rewarded
+- Banner Ads
+    - Basic 320 x 50
+    - MRec 300 x 250
+    - Cover 300 x 157
+- Native Ads
