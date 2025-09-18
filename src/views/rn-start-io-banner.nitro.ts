@@ -9,6 +9,7 @@ export enum BannerFormat {
 export interface RNStartIoBannerProps extends HybridViewProps {
     format: BannerFormat;
     adTag?: string;
+    onDisappear: () => void;
     onLoadError?: (message?: string) => void;
     onReceiveAd?: () => void;
     onFailedToReceiveAd?: () => void;

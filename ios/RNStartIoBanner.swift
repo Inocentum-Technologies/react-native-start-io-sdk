@@ -16,18 +16,14 @@ class RNStartIoBanner: HybridRNStartIoBannerSpec {
     var currentBannerDelegate: BannerDelegate?
     
     var format: BannerFormat = BannerFormat.banner
-    
     var adTag: String?
     
     var onLoadError: ((String?) -> Void)?
-    
     var onReceiveAd: (() -> Void)?
-    
     var onFailedToReceiveAd: (() -> Void)?
-    
     var onImpression: (() -> Void)?
-    
     var onClick: (() -> Void)?
+    var onDisappear: (() -> Void) = {}
     
     var view: UIView = UIView()
     

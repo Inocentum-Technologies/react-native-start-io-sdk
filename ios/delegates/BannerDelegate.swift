@@ -16,7 +16,7 @@ class BannerDelegate: NSObject, STABannerDelegateProtocol {
     var onClick: (() -> Void)?
     var loadingComplete: (() -> Void)?
     
-    func bannerAdIsReady(toDisplay banner: STABannerViewBase) {
+    func didDisplayBannerAd(_ banner: STABannerViewBase) {
         print("✅ Banner Ad loaded successfully")
         onReceiveAd?()
         loadingComplete?()

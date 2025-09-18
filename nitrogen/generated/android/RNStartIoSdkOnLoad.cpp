@@ -18,8 +18,8 @@
 #include "JHybridRNStartIoSdkSpec.hpp"
 #include "JFunc_void_AdResultType.hpp"
 #include "JHybridRNStartIoBannerSpec.hpp"
-#include "JFunc_void_std__optional_std__string_.hpp"
 #include "JFunc_void.hpp"
+#include "JFunc_void_std__optional_std__string_.hpp"
 #include "views/JHybridRNStartIoBannerStateUpdater.hpp"
 #include "JHybridRNStartIoNativeAdSpec.hpp"
 #include "JFunc_void_NativeAdDetails.hpp"
@@ -39,8 +39,8 @@ int initialize(JavaVM* vm) {
     margelo::nitro::rnstartiosdk::JHybridRNStartIoSdkSpec::registerNatives();
     margelo::nitro::rnstartiosdk::JFunc_void_AdResultType_cxx::registerNatives();
     margelo::nitro::rnstartiosdk::JHybridRNStartIoBannerSpec::registerNatives();
-    margelo::nitro::rnstartiosdk::JFunc_void_std__optional_std__string__cxx::registerNatives();
     margelo::nitro::rnstartiosdk::JFunc_void_cxx::registerNatives();
+    margelo::nitro::rnstartiosdk::JFunc_void_std__optional_std__string__cxx::registerNatives();
     margelo::nitro::rnstartiosdk::views::JHybridRNStartIoBannerStateUpdater::registerNatives();
     margelo::nitro::rnstartiosdk::JHybridRNStartIoNativeAdSpec::registerNatives();
     margelo::nitro::rnstartiosdk::JFunc_void_NativeAdDetails_cxx::registerNatives();

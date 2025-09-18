@@ -53,6 +53,8 @@ namespace margelo::nitro::rnstartiosdk {
     void setFormat(BannerFormat format) override;
     std::optional<std::string> getAdTag() override;
     void setAdTag(const std::optional<std::string>& adTag) override;
+    std::function<void()> getOnDisappear() override;
+    void setOnDisappear(const std::function<void()>& onDisappear) override;
     std::optional<std::function<void(const std::optional<std::string>& /* message */)>> getOnLoadError() override;
     void setOnLoadError(const std::optional<std::function<void(const std::optional<std::string>& /* message */)>>& onLoadError) override;
     std::optional<std::function<void()>> getOnReceiveAd() override;

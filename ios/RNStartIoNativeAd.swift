@@ -13,21 +13,20 @@ import UIKit
 class RNStartIoNativeAd: HybridRNStartIoNativeAdSpec {
     
     private var isNativeAdLoading = false
+    private var isNativeAdLoaded = false
     var currentLoadShowDelegate: LoadShowAdDelegate?
 
     var onLoadAd: (NativeAdDetails) -> Void = { _ in }
-    
     var onLoadError: ((String) -> Void)? = nil
     
-    var view: UIView = UIView()
+    var view: UIView = CustomView()
     
-    override init() {
-        super.init()
+    func afterUpdate() {
         requestNativeAd()
     }
     
     private func requestNativeAd(){
-        guard !isNativeAdLoading else { return }
+        guard !isNativeAdLoading, !isNativeAdLoaded else { return }
         isNativeAdLoading = true
         
         let loadShowAdDelegate = LoadShowAdDelegate()
@@ -35,6 +34,7 @@ class RNStartIoNativeAd: HybridRNStartIoNativeAdSpec {
         currentLoadShowDelegate = loadShowAdDelegate
         
         loadShowAdDelegate.loadPromise.then({
+            self.isNativeAdLoaded = true
             guard let adDetails = startAppNativeAd.adsDetails,
                   !(adDetails.count < 1),
                   let nativeAdDetails = adDetails[0] as? STANativeAdDetails else {
@@ -42,7 +42,9 @@ class RNStartIoNativeAd: HybridRNStartIoNativeAdSpec {
                 self.isNativeAdLoading = false
                 return
             }
-            nativeAdDetails.registerView(forImpressionAndClick: self.view)
+            (self.view as? CustomView)?.didAppear {
+                nativeAdDetails.registerView(forImpressionAndClick: self.view)
+            }
             self.onLoadAd(
                 NativeAdDetails(
                     title: nativeAdDetails.title ?? "",
@@ -62,7 +64,7 @@ class RNStartIoNativeAd: HybridRNStartIoNativeAdSpec {
             self.isNativeAdLoading = false
         }).catch({error in
             self.onLoadError?(error.localizedDescription)
-            self.isNativeAdLoading = true;
+            self.isNativeAdLoading = true
         })
         
         startAppNativeAd.load(withDelegate: loadShowAdDelegate)

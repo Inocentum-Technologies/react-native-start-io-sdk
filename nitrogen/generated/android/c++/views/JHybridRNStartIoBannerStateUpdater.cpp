@@ -44,6 +44,10 @@ void JHybridRNStartIoBannerStateUpdater::updateViewProps(jni::alias_ref<jni::JCl
     view->setAdTag(props.adTag.value);
     // TODO: Set isDirty = false
   }
+  if (props.onDisappear.isDirty) {
+    view->setOnDisappear(props.onDisappear.value);
+    // TODO: Set isDirty = false
+  }
   if (props.onLoadError.isDirty) {
     view->setOnLoadError(props.onLoadError.value);
     // TODO: Set isDirty = false

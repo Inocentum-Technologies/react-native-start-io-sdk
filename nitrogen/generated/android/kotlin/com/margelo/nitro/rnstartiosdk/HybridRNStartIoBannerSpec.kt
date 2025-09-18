@@ -50,6 +50,20 @@ abstract class HybridRNStartIoBannerSpec: HybridView() {
   @set:Keep
   abstract var adTag: String?
   
+  abstract var onDisappear: () -> Unit
+  
+  private var onDisappear_cxx: Func_void
+    @Keep
+    @DoNotStrip
+    get() {
+      return Func_void_java(onDisappear)
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onDisappear = value
+    }
+  
   abstract var onLoadError: ((message: String?) -> Unit)?
   
   private var onLoadError_cxx: Func_void_std__optional_std__string_?

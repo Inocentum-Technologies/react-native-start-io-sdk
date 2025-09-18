@@ -6,6 +6,7 @@
   "validAttributes": {
     "format": true,
     "adTag": true,
+    "onDisappear": true,
     "onLoadError": true,
     "onReceiveAd": true,
     "onFailedToReceiveAd": true,

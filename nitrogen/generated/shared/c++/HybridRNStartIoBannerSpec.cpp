@@ -18,6 +18,8 @@ namespace margelo::nitro::rnstartiosdk {
       prototype.registerHybridSetter("format", &HybridRNStartIoBannerSpec::setFormat);
       prototype.registerHybridGetter("adTag", &HybridRNStartIoBannerSpec::getAdTag);
       prototype.registerHybridSetter("adTag", &HybridRNStartIoBannerSpec::setAdTag);
+      prototype.registerHybridGetter("onDisappear", &HybridRNStartIoBannerSpec::getOnDisappear);
+      prototype.registerHybridSetter("onDisappear", &HybridRNStartIoBannerSpec::setOnDisappear);
       prototype.registerHybridGetter("onLoadError", &HybridRNStartIoBannerSpec::getOnLoadError);
       prototype.registerHybridSetter("onLoadError", &HybridRNStartIoBannerSpec::setOnLoadError);
       prototype.registerHybridGetter("onReceiveAd", &HybridRNStartIoBannerSpec::getOnReceiveAd);

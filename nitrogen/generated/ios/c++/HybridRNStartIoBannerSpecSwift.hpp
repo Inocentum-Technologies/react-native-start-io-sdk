@@ -71,6 +71,13 @@ namespace margelo::nitro::rnstartiosdk {
     inline void setAdTag(const std::optional<std::string>& adTag) noexcept override {
       _swiftPart.setAdTag(adTag);
     }
+    inline std::function<void()> getOnDisappear() noexcept override {
+      auto __result = _swiftPart.getOnDisappear();
+      return __result;
+    }
+    inline void setOnDisappear(const std::function<void()>& onDisappear) noexcept override {
+      _swiftPart.setOnDisappear(onDisappear);
+    }
     inline std::optional<std::function<void(const std::optional<std::string>& /* message */)>> getOnLoadError() noexcept override {
       auto __result = _swiftPart.getOnLoadError();
       return __result;

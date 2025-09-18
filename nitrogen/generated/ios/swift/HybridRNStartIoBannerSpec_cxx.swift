@@ -141,6 +141,25 @@ open class HybridRNStartIoBannerSpec_cxx {
     }
   }
   
+  public final var onDisappear: bridge.Func_void {
+    @inline(__always)
+    get {
+      return { () -> bridge.Func_void in
+        let __closureWrapper = Func_void(self.__implementation.onDisappear)
+        return bridge.create_Func_void(__closureWrapper.toUnsafe())
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onDisappear = { () -> () -> Void in
+        let __wrappedFunction = bridge.wrap_Func_void(newValue)
+        return { () -> Void in
+          __wrappedFunction.call()
+        }
+      }()
+    }
+  }
+  
   public final var onLoadError: bridge.std__optional_std__function_void_const_std__optional_std__string______message______ {
     @inline(__always)
     get {

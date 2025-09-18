@@ -81,6 +81,11 @@ using namespace margelo::nitro::rnstartiosdk::views;
     swiftPart.setAdTag(newViewProps.adTag.value);
     newViewProps.adTag.isDirty = false;
   }
+  // onDisappear: function
+  if (newViewProps.onDisappear.isDirty) {
+    swiftPart.setOnDisappear(newViewProps.onDisappear.value);
+    newViewProps.onDisappear.isDirty = false;
+  }
   // onLoadError: optional
   if (newViewProps.onLoadError.isDirty) {
     swiftPart.setOnLoadError(newViewProps.onLoadError.value);

@@ -1,15 +1,51 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { getHostComponent } from "react-native-nitro-modules";
 import RNStartIoBannerConfig from "../nitrogen/generated/shared/json/RNStartIoBannerConfig.json";
 import { BannerFormat, type RNStartIoBannerMethods, type RNStartIoBannerProps } from "./views/rn-start-io-banner.nitro";
-import type { ViewStyle } from "react-native";
+import { Platform, type ViewStyle } from "react-native";
 
 const RNStartIoBanner = getHostComponent<
     RNStartIoBannerProps,
     RNStartIoBannerMethods
 >("RNStartIoBanner", () => RNStartIoBannerConfig);
 
-type PropsType = Omit<RNStartIoBannerProps, "format"> & { style?: ViewStyle };
+type NativePropsType = Omit<RNStartIoBannerProps, "onDisappear"> & { style?: ViewStyle };
+type PropsType = Omit<NativePropsType, "format">;
+
+const AndroidBannerView = memo((props: NativePropsType) => {
+    const [render, setRender] = useState(false);
+    return (
+        <RNStartIoBanner
+            {...props}
+            style={render ? props.style : {}}
+            onLoadError={{ f: props.onLoadError }}
+            onClick={{ f: props.onClick }}
+            onFailedToReceiveAd={{ f: props.onFailedToReceiveAd }}
+            onImpression={{ f: props.onImpression }}
+            onReceiveAd={{
+                f: () => {
+                    setRender(true);
+                    props.onReceiveAd?.()
+                }
+            }}
+            onDisappear={{ f: () => setRender(false) }}
+        />
+    );
+});
+
+const IosBannerView = memo((props: NativePropsType) => {
+    return (
+        <RNStartIoBanner
+            {...props}
+            onLoadError={{ f: props.onLoadError }}
+            onClick={{ f: props.onClick }}
+            onFailedToReceiveAd={{ f: props.onFailedToReceiveAd }}
+            onImpression={{ f: props.onImpression }}
+            onReceiveAd={{ f: props.onReceiveAd }}
+            onDisappear={{ f: () => { } }}
+        />
+    );
+});
 
 /**
  * Displays a Start.io **Banner** ad with a fixed size of **320x50** pixels.
@@ -37,24 +73,23 @@ type PropsType = Omit<RNStartIoBannerProps, "format"> & { style?: ViewStyle };
  * />
  * ```
  */
-const StartIoBannerAd = memo((props: PropsType) => {
-    return (
-        <RNStartIoBanner
-            format={BannerFormat.BANNER}
+const StartIoBannerAd = (props: PropsType) => {
+    const style = {
+        width: 320,
+        height: 50,
+        ...props.style,
+    };
+    return Platform.select({
+        android: <AndroidBannerView
             {...props}
-            style={{
-                width: 320,
-                height: 50,
-                ...props.style,
-            }}
-            onLoadError={{ f: props.onLoadError }}
-            onClick={{ f: props.onClick }}
-            onFailedToReceiveAd={{ f: props.onFailedToReceiveAd }}
-            onImpression={{ f: props.onImpression }}
-            onReceiveAd={{ f: props.onReceiveAd }}
-        />
-    );
-});
+            format={BannerFormat.BANNER}
+            style={style} />,
+        ios: <IosBannerView
+            {...props}
+            format={BannerFormat.BANNER}
+            style={style} />
+    });
+};
 
 /**
  * Displays a Start.io **MREC (Medium Rectangle)** ad with a fixed size of **300x250** pixels.
@@ -82,24 +117,23 @@ const StartIoBannerAd = memo((props: PropsType) => {
  * />
  * ```
  */
-const StartIoMrecAd = memo((props: PropsType) => {
-    return (
-        <RNStartIoBanner
-            format={BannerFormat.MREC}
+const StartIoMrecAd = (props: PropsType) => {
+    const style = {
+        width: 300,
+        height: 250,
+        ...props.style,
+    };
+    return Platform.select({
+        android: <AndroidBannerView
             {...props}
-            style={{
-                width: 300,
-                height: 250,
-                ...props.style,
-            }}
-            onLoadError={{ f: props.onLoadError }}
-            onClick={{ f: props.onClick }}
-            onFailedToReceiveAd={{ f: props.onFailedToReceiveAd }}
-            onImpression={{ f: props.onImpression }}
-            onReceiveAd={{ f: props.onReceiveAd }}
-        />
-    );
-});
+            format={BannerFormat.MREC}
+            style={style} />,
+        ios: <IosBannerView
+            {...props}
+            format={BannerFormat.MREC}
+            style={style} />
+    });
+};
 
 /**
  * Displays a Start.io **Cover** ad with a fixed size of **300x157** pixels.
@@ -127,23 +161,23 @@ const StartIoMrecAd = memo((props: PropsType) => {
  * />
  * ```
  */
-const StartIoCoverAd = memo((props: PropsType) => {
-    return (
-        <RNStartIoBanner
-            format={BannerFormat.COVER}
+
+const StartIoCoverAd = (props: PropsType) => {
+    const style = {
+        width: 300,
+        height: 157,
+        ...props.style,
+    };
+    return Platform.select({
+        android: <AndroidBannerView
             {...props}
-            style={{
-                width: 300,
-                height: 157,
-                ...props.style,
-            }}
-            onLoadError={{ f: props.onLoadError }}
-            onClick={{ f: props.onClick }}
-            onFailedToReceiveAd={{ f: props.onFailedToReceiveAd }}
-            onImpression={{ f: props.onImpression }}
-            onReceiveAd={{ f: props.onReceiveAd }}
-        />
-    );
-});
+            format={BannerFormat.COVER}
+            style={style} />,
+        ios: <IosBannerView
+            {...props}
+            format={BannerFormat.COVER}
+            style={style} />
+    });
+};
 
 export { StartIoBannerAd, StartIoCoverAd, StartIoMrecAd };

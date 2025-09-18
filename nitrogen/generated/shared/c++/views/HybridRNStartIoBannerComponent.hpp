@@ -19,6 +19,7 @@
 #include "BannerFormat.hpp"
 #include <string>
 #include <optional>
+#include <functional>
 #include <string>
 #include <optional>
 #include <functional>
@@ -59,6 +60,7 @@ namespace margelo::nitro::rnstartiosdk::views {
   public:
     CachedProp<BannerFormat> format;
     CachedProp<std::optional<std::string>> adTag;
+    CachedProp<std::function<void()>> onDisappear;
     CachedProp<std::optional<std::function<void(const std::optional<std::string>& /* message */)>>> onLoadError;
     CachedProp<std::optional<std::function<void()>>> onReceiveAd;
     CachedProp<std::optional<std::function<void()>>> onFailedToReceiveAd;

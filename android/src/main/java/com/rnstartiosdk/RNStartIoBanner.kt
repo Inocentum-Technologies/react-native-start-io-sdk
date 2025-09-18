@@ -2,10 +2,6 @@ package com.rnstartiosdk
 
 import android.util.Log
 import android.view.View
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.viewinterop.AndroidView
 import com.facebook.react.uimanager.ThemedReactContext
 import com.margelo.nitro.rnstartiosdk.BannerFormat
 import com.margelo.nitro.rnstartiosdk.HybridRNStartIoBannerSpec
@@ -14,27 +10,39 @@ import com.startapp.sdk.ads.banner.BannerListener
 import com.startapp.sdk.ads.banner.BannerRequest
 import com.startapp.sdk.ads.banner.BannerFormat as StartIOBannerFormat
 import com.startapp.sdk.adsbase.model.AdPreferences
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
-class RNStartIoBanner(val context: ThemedReactContext): HybridRNStartIoBannerSpec() {
+class RNStartIoBanner(val context: ThemedReactContext) : HybridRNStartIoBannerSpec() {
     private companion object {
         val LOG_TAG: String = RNStartIoBanner::class.java.simpleName
     }
 
     private val isAdLoading = MutableStateFlow(false)
-    private var composeView = ComposeView(context)
+    private val uiScope = CoroutineScope(Dispatchers.Main)
+    private val bannerRequest = BannerRequest(context)
+    private var customView = CustomView(context) { visible ->
+        if (visible) onViewAppear()
+        else onViewDisappear()
+    }
 
-    override var view = composeView
+    override var view = customView
 
     override var format: BannerFormat = BannerFormat.BANNER
         set(value) {
             field = value
-            requestBanner()
+            uiScope.launch {
+                updateFormat()
+            }
         }
     override var adTag: String? = null
         set(value) {
             field = value
-            requestBanner()
+            uiScope.launch {
+                updateAdTag()
+            }
         }
 
     override var onLoadError: ((String?) -> Unit)? = {}
@@ -42,76 +50,76 @@ class RNStartIoBanner(val context: ThemedReactContext): HybridRNStartIoBannerSpe
     override var onFailedToReceiveAd: (() -> Unit)? = {}
     override var onImpression: (() -> Unit)? = {}
     override var onClick: (() -> Unit)? = {}
+    override var onDisappear: () -> Unit = {}
 
+    private fun updateFormat() {
+        bannerRequest.setAdFormat(convertBannerFormatEnumSafe(format))
+    }
 
-    private fun requestBanner() {
-        if (isAdLoading.value) return
-        isAdLoading.value = true
+    private fun updateAdTag() {
         val adPreferences = AdPreferences()
-
         if (adTag != null) {
             adPreferences.adTag = adTag
         }
-
-        BannerRequest(context)
-            .setAdFormat(convertBannerFormatEnumSafe(format))
-            .setAdPreferences(adPreferences)
-            .load { creator: BannerCreator?, error: String? ->
-                if (creator != null) {
-                    val adView = creator.create(context, object : BannerListener {
-                        override fun onReceiveAd(banner: View) {
-                            Log.v(LOG_TAG, "loadAdView: onReceiveAd")
-                            onReceiveAd?.invoke()
-                            isAdLoading.value = false
-                            composeView.invalidate() // Needed for react-native to detect changes
-                        }
-
-                        override fun onFailedToReceiveAd(banner: View) {
-                            Log.v(LOG_TAG, "loadAdView: onFailedToReceiveAd")
-                            onFailedToReceiveAd?.invoke()
-                            isAdLoading.value = false
-                        }
-
-                        override fun onImpression(banner: View) {
-                            Log.v(LOG_TAG, "loadAdView: onImpression")
-                            onImpression?.invoke()
-                            isAdLoading.value = false
-                        }
-
-                        override fun onClick(banner: View) {
-                            Log.v(LOG_TAG, "loadAdView: onClick")
-                            onClick?.invoke()
-                            isAdLoading.value = false
-                        }
-                    })
-
-                    renderView(adView)
-                    isAdLoading.value = false
-                } else {
-                    Log.e(LOG_TAG, "loadAdView: error: $error")
-                    removeAllViews()
-                    onLoadError?.invoke(error)
-                    isAdLoading.value = false
-                }
-            }
-    }
-
-    private fun renderView(view: View) {
-        composeView.setContent {
-            AndroidView(
-                modifier = Modifier.fillMaxWidth(),
-                factory = { view }
-            )
-        }
-    }
-
-    private fun removeAllViews() {
-        composeView.removeAllViews()
+        bannerRequest.setAdPreferences(adPreferences)
+        onViewAppear()
     }
 
     private fun convertBannerFormatEnumSafe(source: BannerFormat): StartIOBannerFormat {
         return StartIOBannerFormat.entries.find {
             it.name == source.name
         } ?: StartIOBannerFormat.BANNER
+    }
+
+    private fun onViewAppear() {
+        try {
+            bannerRequest.load { creator: BannerCreator?, error: String? ->
+                if (creator != null) {
+                    val adView = creator.create(context, object : BannerListener {
+                        override fun onReceiveAd(banner: View) {
+                            Log.v(LOG_TAG, "loadAdView: onReceiveAd")
+                            onReceiveAd?.invoke()
+                        }
+
+                        override fun onFailedToReceiveAd(banner: View) {
+                            Log.v(LOG_TAG, "loadAdView: onFailedToReceiveAd")
+                            onFailedToReceiveAd?.invoke()
+                        }
+
+                        override fun onImpression(banner: View) {
+                            Log.v(LOG_TAG, "loadAdView: onImpression")
+                            onImpression?.invoke()
+                        }
+
+                        override fun onClick(banner: View) {
+                            Log.v(LOG_TAG, "loadAdView: onClick")
+                            onClick?.invoke()
+                        }
+                    })
+
+                    uiScope.launch {
+                        customView.addView(adView)
+                    }
+                } else {
+                    Log.e(LOG_TAG, "loadAdView: error: $error")
+                    onViewDisappear()
+                    onLoadError?.invoke(error)
+                    isAdLoading.value = false
+                }
+            }
+        } catch (e: Throwable) {
+            Log.e(LOG_TAG, "Failed to request banner ad!", e)
+        }
+    }
+
+    private fun onViewDisappear() {
+        uiScope.launch {
+            try {
+                customView.removeAllViews()
+                onDisappear()
+            } catch (e: Throwable) {
+                Log.e(LOG_TAG, "Failed to drop banner ad!", e)
+            }
+        }
     }
 }

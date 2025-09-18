@@ -45,6 +45,16 @@ namespace margelo::nitro::rnstartiosdk::views {
         throw std::runtime_error(std::string("RNStartIoBanner.adTag: ") + exc.what());
       }
     }()),
+    onDisappear([&]() -> CachedProp<std::function<void()>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onDisappear", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onDisappear;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::function<void()>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onDisappear);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("RNStartIoBanner.onDisappear: ") + exc.what());
+      }
+    }()),
     onLoadError([&]() -> CachedProp<std::optional<std::function<void(const std::optional<std::string>& /* message */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onLoadError", nullptr, nullptr);
@@ -110,6 +120,7 @@ namespace margelo::nitro::rnstartiosdk::views {
     react::ViewProps(),
     format(other.format),
     adTag(other.adTag),
+    onDisappear(other.onDisappear),
     onLoadError(other.onLoadError),
     onReceiveAd(other.onReceiveAd),
     onFailedToReceiveAd(other.onFailedToReceiveAd),
@@ -121,6 +132,7 @@ namespace margelo::nitro::rnstartiosdk::views {
     switch (hashString(propName)) {
       case hashString("format"): return true;
       case hashString("adTag"): return true;
+      case hashString("onDisappear"): return true;
       case hashString("onLoadError"): return true;
       case hashString("onReceiveAd"): return true;
       case hashString("onFailedToReceiveAd"): return true;

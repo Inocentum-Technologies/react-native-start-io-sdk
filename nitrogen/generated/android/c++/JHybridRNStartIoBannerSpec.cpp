@@ -15,8 +15,8 @@ namespace margelo::nitro::rnstartiosdk { enum class BannerFormat; }
 #include <string>
 #include <optional>
 #include <functional>
-#include "JFunc_void_std__optional_std__string_.hpp"
 #include "JFunc_void.hpp"
+#include "JFunc_void_std__optional_std__string_.hpp"
 
 namespace margelo::nitro::rnstartiosdk {
 
@@ -58,6 +58,25 @@ namespace margelo::nitro::rnstartiosdk {
   void JHybridRNStartIoBannerSpec::setAdTag(const std::optional<std::string>& adTag) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* adTag */)>("setAdTag");
     method(_javaPart, adTag.has_value() ? jni::make_jstring(adTag.value()) : nullptr);
+  }
+  std::function<void()> JHybridRNStartIoBannerSpec::getOnDisappear() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void::javaobject>()>("getOnDisappear_cxx");
+    auto __result = method(_javaPart);
+    return [&]() -> std::function<void()> {
+      if (__result->isInstanceOf(JFunc_void_cxx::javaClassStatic())) [[likely]] {
+        auto downcast = jni::static_ref_cast<JFunc_void_cxx::javaobject>(__result);
+        return downcast->cthis()->getFunction();
+      } else {
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef]() -> void {
+          return __resultRef->invoke();
+        };
+      }
+    }();
+  }
+  void JHybridRNStartIoBannerSpec::setOnDisappear(const std::function<void()>& onDisappear) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void::javaobject> /* onDisappear */)>("setOnDisappear_cxx");
+    method(_javaPart, JFunc_void_cxx::fromCpp(onDisappear));
   }
   std::optional<std::function<void(const std::optional<std::string>& /* message */)>> JHybridRNStartIoBannerSpec::getOnLoadError() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_std__optional_std__string_::javaobject>()>("getOnLoadError_cxx");

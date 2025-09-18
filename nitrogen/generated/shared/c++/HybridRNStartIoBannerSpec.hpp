@@ -52,6 +52,8 @@ namespace margelo::nitro::rnstartiosdk {
       virtual void setFormat(BannerFormat format) = 0;
       virtual std::optional<std::string> getAdTag() = 0;
       virtual void setAdTag(const std::optional<std::string>& adTag) = 0;
+      virtual std::function<void()> getOnDisappear() = 0;
+      virtual void setOnDisappear(const std::function<void()>& onDisappear) = 0;
       virtual std::optional<std::function<void(const std::optional<std::string>& /* message */)>> getOnLoadError() = 0;
       virtual void setOnLoadError(const std::optional<std::function<void(const std::optional<std::string>& /* message */)>>& onLoadError) = 0;
       virtual std::optional<std::function<void()>> getOnReceiveAd() = 0;

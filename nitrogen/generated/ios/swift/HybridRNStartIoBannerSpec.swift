@@ -13,6 +13,7 @@ public protocol HybridRNStartIoBannerSpec_protocol: HybridObject, HybridView {
   // Properties
   var format: BannerFormat { get set }
   var adTag: String? { get set }
+  var onDisappear: () -> Void { get set }
   var onLoadError: ((_ message: String?) -> Void)? { get set }
   var onReceiveAd: (() -> Void)? { get set }
   var onFailedToReceiveAd: (() -> Void)? { get set }
