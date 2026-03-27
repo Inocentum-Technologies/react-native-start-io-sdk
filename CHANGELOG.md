@@ -1,3 +1,9 @@
+## [0.2.0](https://github.com/Inocentum-Technologies/react-native-start-io-sdk/compare/v0.1.3...v0.2.0) (2026-03-28)
+
+### Features
+
+* Add support for `setUserConsent` & `setIABUSPrivacyString`
+
 ## [0.1.3](https://github.com/Inocentum-Technologies/react-native-start-io-sdk/compare/v0.1.2...v0.1.3) (2025-09-18)
 
 ### Bug Fixes

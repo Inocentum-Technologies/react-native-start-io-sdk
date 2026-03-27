@@ -52,7 +52,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [new, old]
+        arch: [new]
     steps:
       - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2
