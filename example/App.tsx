@@ -25,7 +25,9 @@ import {
 
   // Native
   StartIoNativeAd,
-  NativeAdDetails
+  NativeAdDetails,
+  setIABUSPrivacyString,
+  setUserConsent
 } from 'react-native-start-io-sdk';
 
 const ANDROID_APP_ID = '205489527';
@@ -65,6 +67,44 @@ const App: React.FC = () => {
         <Text style={styles.subheader}>
           Platform: {Platform.OS.toUpperCase()}
         </Text>
+
+        {/* Consent */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Consent</Text>
+          <View style={styles.row}>
+            <View style={styles.button}>
+              <Button
+                title="Set User Consent (true)"
+                onPress={() => setUserConsent(Date.now(), true)}
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                title="Set User Consent (false)"
+                onPress={() => setUserConsent(Date.now(), false)}
+              />
+            </View>
+          </View>
+        </View>
+
+        {/* Compliance */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Compliance</Text>
+          <View style={styles.row}>
+            <View style={styles.button}>
+              <Button
+                title="Set IAB US Privacy String (1YNY)"
+                onPress={() => setIABUSPrivacyString('1YNY')}
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                title="Set IAB US Privacy String (1YNN)"
+                onPress={() => setIABUSPrivacyString('1YNN')}
+              />
+            </View>
+          </View>
+        </View>
 
         {/* Interstitial / Video / Rewarded Controls */}
         <View style={styles.card}>

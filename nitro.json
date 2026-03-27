@@ -14,16 +14,34 @@
   },
   "autolinking": {
     "RNStartIoSdk": {
-      "swift": "RNStartIoSdk",
-      "kotlin": "RNStartIoSdk"
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "RNStartIoSdk"
+      },
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "RNStartIoSdk"
+      }
     },
     "RNStartIoBanner": {
-      "swift": "RNStartIoBanner",
-      "kotlin": "RNStartIoBanner"
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "RNStartIoBanner"
+      },
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "RNStartIoBanner"
+      }
     },
     "RNStartIoNativeAd": {
-      "swift": "RNStartIoNativeAd",
-      "kotlin": "RNStartIoNativeAd"
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "RNStartIoNativeAd"
+      },
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "RNStartIoNativeAd"
+      }
     }
   },
   "ignorePaths": [

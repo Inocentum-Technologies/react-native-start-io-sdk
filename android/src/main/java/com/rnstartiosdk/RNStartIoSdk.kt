@@ -13,6 +13,7 @@ import com.startapp.sdk.adsbase.StartAppSDK
 import com.startapp.sdk.adsbase.adlisteners.AdDisplayListener
 import com.startapp.sdk.adsbase.adlisteners.AdEventListener
 import kotlinx.coroutines.flow.MutableStateFlow
+import androidx.core.content.edit
 
 class RNStartIoSdk : HybridRNStartIoSdkSpec() {
     private companion object {
@@ -35,6 +36,28 @@ class RNStartIoSdk : HybridRNStartIoSdkSpec() {
                     .init()
             }
         }
+    }
+
+    override fun setUserConsent(currentTimeMillis: Double, userConsent: Boolean) {
+        applicationContext?.applicationContext?.let { context ->
+            StartAppSDK.setUserConsent(
+                context,
+                "pas",
+                currentTimeMillis.toLong(),
+                userConsent
+            )
+        }
+        Log.d(LOG_TAG, "Start.io SDK user consent set to $userConsent")
+    }
+
+    override fun setIABUSPrivacyString(iabusPrivacyString: String) {
+        applicationContext?.applicationContext?.let { context ->
+            StartAppSDK.getExtras(context)
+                .edit {
+                    putString("IABUSPrivacy_String", iabusPrivacyString)
+                }
+        }
+        Log.d(LOG_TAG, "Start.io SDK IABUSPrivacy String set to $iabusPrivacyString")
     }
 
     override fun loadAd(adType: AdType): Promise<Unit> {

@@ -30,6 +30,8 @@ export interface InitializeSdkParams {
 
 export interface RNStartIoSdk extends HybridObject<{ ios: 'swift', android: 'kotlin' }> {
     initializeSdk(params: InitializeSdkParams): void;
+    setUserConsent(currentTimeMillis: number, userConsent: boolean): void;
+    setIABUSPrivacyString(iabusPrivacyString: string): void;
     loadAd(adType: AdType): Promise<void>;
     showAd(adResultCallback?: (adResult: AdResultType) => void): void;
 }

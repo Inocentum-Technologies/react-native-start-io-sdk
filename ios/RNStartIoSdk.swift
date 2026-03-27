@@ -29,6 +29,18 @@ class RNStartIoSdk: HybridRNStartIoSdkSpec {
         }
     }
     
+    func setUserConsent(currentTimeMillis: Double, userConsent: Bool) throws {
+        sdkInstance?.setUserConsent(userConsent, forConsentType: "pas", withTimestamp: Int(currentTimeMillis))
+        print("StartIo SDK \"pas\" consent set to \(userConsent)")
+    }
+    
+    func setIABUSPrivacyString(iabusPrivacyString: String) throws {
+        sdkInstance?.handleExtras { extras in
+            extras?.setValue(iabusPrivacyString, forKey: "IABUSPrivacy_String")
+        }
+        print("StartIo SDK \"IABUS Privacy String\" set to \(iabusPrivacyString)")
+    }
+    
     func loadAd(adType: AdType) throws -> Promise<Void> {
         let loadAdDelegate = LoadShowAdDelegate()
         currentLoadShowDelegate = loadAdDelegate
