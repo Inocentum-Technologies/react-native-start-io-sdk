@@ -212,11 +212,39 @@ const styles = StyleSheet.create({
 
 ```
 
+### 5. Compliance and Privacy
+
+#### User Consent (GDPR)
+
+Use `setUserConsent` to set the user consent for personalized ads.
+
+```typescript
+import { setUserConsent } from 'react-native-start-io-sdk';
+
+// Set user consent for personalized ads
+setUserConsent(Date.now(), true);
+```
+
+#### IAB US Privacy String (CCPA)
+
+Use `setIABUSPrivacyString` to set the IAB US Privacy String for personalized ads.
+
+```typescript
+import { setIABUSPrivacyString } from 'react-native-start-io-sdk';
+
+// Set IAB US Privacy String
+setIABUSPrivacyString('1YNY');
+```
+
 ## API Reference
 
 ### Functions
 
--   `initializeStartIoSdk(appId, testAd?, returnAd?)` — Initialize SDK.
+-   `initializeStartIoSdk(params: InitializeSdkParams)` — Initialize SDK.
+
+-   `setUserConsent(currentTimeMillis, userConsent)` — Set user consent for personalized ads (GDPR).
+
+-   `setIABUSPrivacyString(iabusPrivacyString)` — Set IAB US Privacy String (CCPA).
     
 -   `loadAd(adType?)` — Load an ad.
     
