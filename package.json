@@ -1,6 +1,6 @@
 {
   "name": "react-native-start-io-sdk",
-  "version": "0.2.0",
+  "version": "0.1.4",
   "description": "Start.io (Formerly StartApp) ad SDK for react-native",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",

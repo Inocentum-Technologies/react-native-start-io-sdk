@@ -1,3 +1,5 @@
+## [0.1.4](https://github.com/Inocentum-Technologies/react-native-start-io-sdk/compare/v0.1.3...v0.1.4) (2026-03-30)
+
 ## [0.2.0](https://github.com/Inocentum-Technologies/react-native-start-io-sdk/compare/v0.1.3...v0.2.0) (2026-03-28)
 
 ### Features
