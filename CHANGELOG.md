@@ -1,3 +1,9 @@
+## [0.1.5](https://github.com/Inocentum-Technologies/react-native-start-io-sdk/compare/v0.1.4...v0.1.5) (2026-04-08)
+
+### Features
+
+* implement NativeAdTouchArea component and add native ad loading capabilities with preference support ([2aed63e](https://github.com/Inocentum-Technologies/react-native-start-io-sdk/commit/2aed63e14b1b0f1de33e157c3f36456cd2991107))
+
 ## [0.1.4](https://github.com/Inocentum-Technologies/react-native-start-io-sdk/compare/v0.1.3...v0.1.4) (2026-03-30)
 
 ## [0.2.0](https://github.com/Inocentum-Technologies/react-native-start-io-sdk/compare/v0.1.3...v0.2.0) (2026-03-28)
