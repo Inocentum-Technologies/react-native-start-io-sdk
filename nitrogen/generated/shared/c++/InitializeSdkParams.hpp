@@ -28,10 +28,12 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-
+// Forward declaration of `AdInitPreferences` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { struct AdInitPreferences; }
 
 #include <string>
 #include <optional>
+#include "AdInitPreferences.hpp"
 
 namespace margelo::nitro::rnstartiosdk {
 
@@ -40,14 +42,15 @@ namespace margelo::nitro::rnstartiosdk {
    */
   struct InitializeSdkParams final {
   public:
-    std::string androidAppId     SWIFT_PRIVATE;
-    std::string iOSAppId     SWIFT_PRIVATE;
+    std::optional<std::string> androidAppId     SWIFT_PRIVATE;
+    std::optional<std::string> iOSAppId     SWIFT_PRIVATE;
+    std::optional<AdInitPreferences> adPreferences     SWIFT_PRIVATE;
     std::optional<bool> testAd     SWIFT_PRIVATE;
     std::optional<bool> returnAd     SWIFT_PRIVATE;
 
   public:
     InitializeSdkParams() = default;
-    explicit InitializeSdkParams(std::string androidAppId, std::string iOSAppId, std::optional<bool> testAd, std::optional<bool> returnAd): androidAppId(androidAppId), iOSAppId(iOSAppId), testAd(testAd), returnAd(returnAd) {}
+    explicit InitializeSdkParams(std::optional<std::string> androidAppId, std::optional<std::string> iOSAppId, std::optional<AdInitPreferences> adPreferences, std::optional<bool> testAd, std::optional<bool> returnAd): androidAppId(androidAppId), iOSAppId(iOSAppId), adPreferences(adPreferences), testAd(testAd), returnAd(returnAd) {}
 
   public:
     friend bool operator==(const InitializeSdkParams& lhs, const InitializeSdkParams& rhs) = default;
@@ -63,16 +66,18 @@ namespace margelo::nitro {
     static inline margelo::nitro::rnstartiosdk::InitializeSdkParams fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       jsi::Object obj = arg.asObject(runtime);
       return margelo::nitro::rnstartiosdk::InitializeSdkParams(
-        JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "androidAppId"))),
-        JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "iOSAppId"))),
+        JSIConverter<std::optional<std::string>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "androidAppId"))),
+        JSIConverter<std::optional<std::string>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "iOSAppId"))),
+        JSIConverter<std::optional<margelo::nitro::rnstartiosdk::AdInitPreferences>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "adPreferences"))),
         JSIConverter<std::optional<bool>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "testAd"))),
         JSIConverter<std::optional<bool>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "returnAd")))
       );
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::rnstartiosdk::InitializeSdkParams& arg) {
       jsi::Object obj(runtime);
-      obj.setProperty(runtime, PropNameIDCache::get(runtime, "androidAppId"), JSIConverter<std::string>::toJSI(runtime, arg.androidAppId));
-      obj.setProperty(runtime, PropNameIDCache::get(runtime, "iOSAppId"), JSIConverter<std::string>::toJSI(runtime, arg.iOSAppId));
+      obj.setProperty(runtime, PropNameIDCache::get(runtime, "androidAppId"), JSIConverter<std::optional<std::string>>::toJSI(runtime, arg.androidAppId));
+      obj.setProperty(runtime, PropNameIDCache::get(runtime, "iOSAppId"), JSIConverter<std::optional<std::string>>::toJSI(runtime, arg.iOSAppId));
+      obj.setProperty(runtime, PropNameIDCache::get(runtime, "adPreferences"), JSIConverter<std::optional<margelo::nitro::rnstartiosdk::AdInitPreferences>>::toJSI(runtime, arg.adPreferences));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "testAd"), JSIConverter<std::optional<bool>>::toJSI(runtime, arg.testAd));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "returnAd"), JSIConverter<std::optional<bool>>::toJSI(runtime, arg.returnAd));
       return obj;
@@ -85,8 +90,9 @@ namespace margelo::nitro {
       if (!nitro::isPlainObject(runtime, obj)) {
         return false;
       }
-      if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "androidAppId")))) return false;
-      if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "iOSAppId")))) return false;
+      if (!JSIConverter<std::optional<std::string>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "androidAppId")))) return false;
+      if (!JSIConverter<std::optional<std::string>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "iOSAppId")))) return false;
+      if (!JSIConverter<std::optional<margelo::nitro::rnstartiosdk::AdInitPreferences>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "adPreferences")))) return false;
       if (!JSIConverter<std::optional<bool>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "testAd")))) return false;
       if (!JSIConverter<std::optional<bool>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "returnAd")))) return false;
       return true;

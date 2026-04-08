@@ -8,6 +8,10 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `AdInitPreferences` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { struct AdInitPreferences; }
+// Forward declaration of `AdPreferenceGender` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { enum class AdPreferenceGender; }
 // Forward declaration of `AdResultType` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { enum class AdResultType; }
 // Forward declaration of `CampaignAction` to properly resolve imports.
@@ -16,6 +20,8 @@ namespace margelo::nitro::rnstartiosdk { enum class CampaignAction; }
 namespace margelo::nitro::rnstartiosdk { class HybridRNStartIoBannerSpec; }
 // Forward declaration of `HybridRNStartIoNativeAdSpec` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { class HybridRNStartIoNativeAdSpec; }
+// Forward declaration of `HybridRNStartIoNativeAdTouchAreaSpec` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { class HybridRNStartIoNativeAdTouchAreaSpec; }
 // Forward declaration of `HybridRNStartIoSdkSpec` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { class HybridRNStartIoSdkSpec; }
 // Forward declaration of `NativeAdDetails` to properly resolve imports.
@@ -26,14 +32,19 @@ namespace margelo::nitro::rnstartiosdk { struct NativeAdDetails; }
 namespace RNStartIoSdk { class HybridRNStartIoBannerSpec_cxx; }
 // Forward declaration of `HybridRNStartIoNativeAdSpec_cxx` to properly resolve imports.
 namespace RNStartIoSdk { class HybridRNStartIoNativeAdSpec_cxx; }
+// Forward declaration of `HybridRNStartIoNativeAdTouchAreaSpec_cxx` to properly resolve imports.
+namespace RNStartIoSdk { class HybridRNStartIoNativeAdTouchAreaSpec_cxx; }
 // Forward declaration of `HybridRNStartIoSdkSpec_cxx` to properly resolve imports.
 namespace RNStartIoSdk { class HybridRNStartIoSdkSpec_cxx; }
 
 // Include C++ defined types
+#include "AdInitPreferences.hpp"
+#include "AdPreferenceGender.hpp"
 #include "AdResultType.hpp"
 #include "CampaignAction.hpp"
 #include "HybridRNStartIoBannerSpec.hpp"
 #include "HybridRNStartIoNativeAdSpec.hpp"
+#include "HybridRNStartIoNativeAdTouchAreaSpec.hpp"
 #include "HybridRNStartIoSdkSpec.hpp"
 #include "NativeAdDetails.hpp"
 #include <NitroModules/Promise.hpp>
@@ -44,6 +55,7 @@ namespace RNStartIoSdk { class HybridRNStartIoSdkSpec_cxx; }
 #include <memory>
 #include <optional>
 #include <string>
+#include <vector>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -51,6 +63,66 @@ namespace RNStartIoSdk { class HybridRNStartIoSdkSpec_cxx; }
  */
 namespace margelo::nitro::rnstartiosdk::bridge::swift {
 
+  // pragma MARK: std::optional<std::string>
+  /**
+   * Specialized version of `std::optional<std::string>`.
+   */
+  using std__optional_std__string_ = std::optional<std::string>;
+  inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) noexcept {
+    return std::optional<std::string>(value);
+  }
+  inline bool has_value_std__optional_std__string_(const std::optional<std::string>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::string get_std__optional_std__string_(const std::optional<std::string>& optional) noexcept {
+    return optional.value();
+  }
+  
+  // pragma MARK: std::optional<double>
+  /**
+   * Specialized version of `std::optional<double>`.
+   */
+  using std__optional_double_ = std::optional<double>;
+  inline std::optional<double> create_std__optional_double_(const double& value) noexcept {
+    return std::optional<double>(value);
+  }
+  inline bool has_value_std__optional_double_(const std::optional<double>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline double get_std__optional_double_(const std::optional<double>& optional) noexcept {
+    return optional.value();
+  }
+  
+  // pragma MARK: std::optional<AdPreferenceGender>
+  /**
+   * Specialized version of `std::optional<AdPreferenceGender>`.
+   */
+  using std__optional_AdPreferenceGender_ = std::optional<AdPreferenceGender>;
+  inline std::optional<AdPreferenceGender> create_std__optional_AdPreferenceGender_(const AdPreferenceGender& value) noexcept {
+    return std::optional<AdPreferenceGender>(value);
+  }
+  inline bool has_value_std__optional_AdPreferenceGender_(const std::optional<AdPreferenceGender>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline AdPreferenceGender get_std__optional_AdPreferenceGender_(const std::optional<AdPreferenceGender>& optional) noexcept {
+    return optional.value();
+  }
+  
+  // pragma MARK: std::optional<AdInitPreferences>
+  /**
+   * Specialized version of `std::optional<AdInitPreferences>`.
+   */
+  using std__optional_AdInitPreferences_ = std::optional<AdInitPreferences>;
+  inline std::optional<AdInitPreferences> create_std__optional_AdInitPreferences_(const AdInitPreferences& value) noexcept {
+    return std::optional<AdInitPreferences>(value);
+  }
+  inline bool has_value_std__optional_AdInitPreferences_(const std::optional<AdInitPreferences>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline AdInitPreferences get_std__optional_AdInitPreferences_(const std::optional<AdInitPreferences>& optional) noexcept {
+    return optional.value();
+  }
+  
   // pragma MARK: std::optional<bool>
   /**
    * Specialized version of `std::optional<bool>`.
@@ -159,6 +231,51 @@ namespace margelo::nitro::rnstartiosdk::bridge::swift {
     return optional.value();
   }
   
+  // pragma MARK: std::vector<NativeAdDetails>
+  /**
+   * Specialized version of `std::vector<NativeAdDetails>`.
+   */
+  using std__vector_NativeAdDetails_ = std::vector<NativeAdDetails>;
+  inline std::vector<NativeAdDetails> create_std__vector_NativeAdDetails_(size_t size) noexcept {
+    std::vector<NativeAdDetails> vector;
+    vector.reserve(size);
+    return vector;
+  }
+  
+  // pragma MARK: std::shared_ptr<Promise<std::vector<NativeAdDetails>>>
+  /**
+   * Specialized version of `std::shared_ptr<Promise<std::vector<NativeAdDetails>>>`.
+   */
+  using std__shared_ptr_Promise_std__vector_NativeAdDetails___ = std::shared_ptr<Promise<std::vector<NativeAdDetails>>>;
+  inline std::shared_ptr<Promise<std::vector<NativeAdDetails>>> create_std__shared_ptr_Promise_std__vector_NativeAdDetails___() noexcept {
+    return Promise<std::vector<NativeAdDetails>>::create();
+  }
+  inline PromiseHolder<std::vector<NativeAdDetails>> wrap_std__shared_ptr_Promise_std__vector_NativeAdDetails___(std::shared_ptr<Promise<std::vector<NativeAdDetails>>> promise) noexcept {
+    return PromiseHolder<std::vector<NativeAdDetails>>(std::move(promise));
+  }
+  
+  // pragma MARK: std::function<void(const std::vector<NativeAdDetails>& /* result */)>
+  /**
+   * Specialized version of `std::function<void(const std::vector<NativeAdDetails>&)>`.
+   */
+  using Func_void_std__vector_NativeAdDetails_ = std::function<void(const std::vector<NativeAdDetails>& /* result */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::vector<NativeAdDetails>& / * result * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__vector_NativeAdDetails__Wrapper final {
+  public:
+    explicit Func_void_std__vector_NativeAdDetails__Wrapper(std::function<void(const std::vector<NativeAdDetails>& /* result */)>&& func): _function(std::make_unique<std::function<void(const std::vector<NativeAdDetails>& /* result */)>>(std::move(func))) {}
+    inline void call(std::vector<NativeAdDetails> result) const noexcept {
+      _function->operator()(result);
+    }
+  private:
+    std::unique_ptr<std::function<void(const std::vector<NativeAdDetails>& /* result */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_std__vector_NativeAdDetails_ create_Func_void_std__vector_NativeAdDetails_(void* NON_NULL swiftClosureWrapper) noexcept;
+  inline Func_void_std__vector_NativeAdDetails__Wrapper wrap_Func_void_std__vector_NativeAdDetails_(Func_void_std__vector_NativeAdDetails_ value) noexcept {
+    return Func_void_std__vector_NativeAdDetails__Wrapper(std::move(value));
+  }
+  
   // pragma MARK: std::shared_ptr<HybridRNStartIoSdkSpec>
   /**
    * Specialized version of `std::shared_ptr<HybridRNStartIoSdkSpec>`.
@@ -189,19 +306,13 @@ namespace margelo::nitro::rnstartiosdk::bridge::swift {
     return Result<std::shared_ptr<Promise<void>>>::withError(error);
   }
   
-  // pragma MARK: std::optional<std::string>
-  /**
-   * Specialized version of `std::optional<std::string>`.
-   */
-  using std__optional_std__string_ = std::optional<std::string>;
-  inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) noexcept {
-    return std::optional<std::string>(value);
+  // pragma MARK: Result<std::shared_ptr<Promise<std::vector<NativeAdDetails>>>>
+  using Result_std__shared_ptr_Promise_std__vector_NativeAdDetails____ = Result<std::shared_ptr<Promise<std::vector<NativeAdDetails>>>>;
+  inline Result_std__shared_ptr_Promise_std__vector_NativeAdDetails____ create_Result_std__shared_ptr_Promise_std__vector_NativeAdDetails____(const std::shared_ptr<Promise<std::vector<NativeAdDetails>>>& value) noexcept {
+    return Result<std::shared_ptr<Promise<std::vector<NativeAdDetails>>>>::withValue(value);
   }
-  inline bool has_value_std__optional_std__string_(const std::optional<std::string>& optional) noexcept {
-    return optional.has_value();
-  }
-  inline std::string get_std__optional_std__string_(const std::optional<std::string>& optional) noexcept {
-    return optional.value();
+  inline Result_std__shared_ptr_Promise_std__vector_NativeAdDetails____ create_Result_std__shared_ptr_Promise_std__vector_NativeAdDetails____(const std::exception_ptr& error) noexcept {
+    return Result<std::shared_ptr<Promise<std::vector<NativeAdDetails>>>>::withError(error);
   }
   
   // pragma MARK: std::function<void(const std::optional<std::string>& /* message */)>
@@ -267,6 +378,18 @@ namespace margelo::nitro::rnstartiosdk::bridge::swift {
   // pragma MARK: std::weak_ptr<HybridRNStartIoBannerSpec>
   using std__weak_ptr_HybridRNStartIoBannerSpec_ = std::weak_ptr<HybridRNStartIoBannerSpec>;
   inline std__weak_ptr_HybridRNStartIoBannerSpec_ weakify_std__shared_ptr_HybridRNStartIoBannerSpec_(const std::shared_ptr<HybridRNStartIoBannerSpec>& strong) noexcept { return strong; }
+  
+  // pragma MARK: std::shared_ptr<HybridRNStartIoNativeAdTouchAreaSpec>
+  /**
+   * Specialized version of `std::shared_ptr<HybridRNStartIoNativeAdTouchAreaSpec>`.
+   */
+  using std__shared_ptr_HybridRNStartIoNativeAdTouchAreaSpec_ = std::shared_ptr<HybridRNStartIoNativeAdTouchAreaSpec>;
+  std::shared_ptr<HybridRNStartIoNativeAdTouchAreaSpec> create_std__shared_ptr_HybridRNStartIoNativeAdTouchAreaSpec_(void* NON_NULL swiftUnsafePointer) noexcept;
+  void* NON_NULL get_std__shared_ptr_HybridRNStartIoNativeAdTouchAreaSpec_(std__shared_ptr_HybridRNStartIoNativeAdTouchAreaSpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<HybridRNStartIoNativeAdTouchAreaSpec>
+  using std__weak_ptr_HybridRNStartIoNativeAdTouchAreaSpec_ = std::weak_ptr<HybridRNStartIoNativeAdTouchAreaSpec>;
+  inline std__weak_ptr_HybridRNStartIoNativeAdTouchAreaSpec_ weakify_std__shared_ptr_HybridRNStartIoNativeAdTouchAreaSpec_(const std::shared_ptr<HybridRNStartIoNativeAdTouchAreaSpec>& strong) noexcept { return strong; }
   
   // pragma MARK: std::function<void(const NativeAdDetails& /* adData */)>
   /**

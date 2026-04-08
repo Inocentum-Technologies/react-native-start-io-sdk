@@ -47,4 +47,16 @@ public final class RNStartIoSdkAutolinking {
   public static func isRNStartIoNativeAdRecyclable() -> Bool {
     return RNStartIoNativeAd.self is any RecyclableView.Type
   }
+  
+  public static func createRNStartIoNativeAdTouchArea() -> bridge.std__shared_ptr_HybridRNStartIoNativeAdTouchAreaSpec_ {
+    let hybridObject = RNStartIoNativeAdTouchArea()
+    return { () -> bridge.std__shared_ptr_HybridRNStartIoNativeAdTouchAreaSpec_ in
+      let __cxxWrapped = hybridObject.getCxxWrapper()
+      return __cxxWrapped.getCxxPart()
+    }()
+  }
+  
+  public static func isRNStartIoNativeAdTouchAreaRecyclable() -> Bool {
+    return RNStartIoNativeAdTouchArea.self is any RecyclableView.Type
+  }
 }

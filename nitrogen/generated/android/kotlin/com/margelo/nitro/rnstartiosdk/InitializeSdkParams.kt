@@ -19,10 +19,13 @@ import com.facebook.proguard.annotations.DoNotStrip
 data class InitializeSdkParams(
   @DoNotStrip
   @Keep
-  val androidAppId: String,
+  val androidAppId: String?,
   @DoNotStrip
   @Keep
-  val iOSAppId: String,
+  val iOSAppId: String?,
+  @DoNotStrip
+  @Keep
+  val adPreferences: AdInitPreferences?,
   @DoNotStrip
   @Keep
   val testAd: Boolean?,
@@ -40,8 +43,8 @@ data class InitializeSdkParams(
     @Keep
     @Suppress("unused")
     @JvmStatic
-    private fun fromCpp(androidAppId: String, iOSAppId: String, testAd: Boolean?, returnAd: Boolean?): InitializeSdkParams {
-      return InitializeSdkParams(androidAppId, iOSAppId, testAd, returnAd)
+    private fun fromCpp(androidAppId: String?, iOSAppId: String?, adPreferences: AdInitPreferences?, testAd: Boolean?, returnAd: Boolean?): InitializeSdkParams {
+      return InitializeSdkParams(androidAppId, iOSAppId, adPreferences, testAd, returnAd)
     }
   }
 }

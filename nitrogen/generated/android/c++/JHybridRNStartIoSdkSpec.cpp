@@ -7,8 +7,16 @@
 
 #include "JHybridRNStartIoSdkSpec.hpp"
 
+// Forward declaration of `NativeAdDetails` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { struct NativeAdDetails; }
+// Forward declaration of `CampaignAction` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { enum class CampaignAction; }
 // Forward declaration of `InitializeSdkParams` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { struct InitializeSdkParams; }
+// Forward declaration of `AdInitPreferences` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { struct AdInitPreferences; }
+// Forward declaration of `AdPreferenceGender` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { enum class AdPreferenceGender; }
 // Forward declaration of `AdType` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { enum class AdType; }
 // Forward declaration of `AdResultType` to properly resolve imports.
@@ -17,10 +25,19 @@ namespace margelo::nitro::rnstartiosdk { enum class AdResultType; }
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/JPromise.hpp>
 #include <NitroModules/JUnit.hpp>
-#include "InitializeSdkParams.hpp"
-#include "JInitializeSdkParams.hpp"
+#include "NativeAdDetails.hpp"
+#include <vector>
+#include "JNativeAdDetails.hpp"
 #include <string>
 #include <optional>
+#include "CampaignAction.hpp"
+#include "JCampaignAction.hpp"
+#include "InitializeSdkParams.hpp"
+#include "JInitializeSdkParams.hpp"
+#include "AdInitPreferences.hpp"
+#include "JAdInitPreferences.hpp"
+#include "AdPreferenceGender.hpp"
+#include "JAdPreferenceGender.hpp"
 #include "AdType.hpp"
 #include "JAdType.hpp"
 #include "AdResultType.hpp"
@@ -92,6 +109,31 @@ namespace margelo::nitro::rnstartiosdk {
   void JHybridRNStartIoSdkSpec::showAd(const std::optional<std::function<void(AdResultType /* adResult */)>>& adResultCallback) {
     static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_AdResultType::javaobject> /* adResultCallback */)>("showAd_cxx");
     method(_javaPart, adResultCallback.has_value() ? JFunc_void_AdResultType_cxx::fromCpp(adResultCallback.value()) : nullptr);
+  }
+  std::shared_ptr<Promise<std::vector<NativeAdDetails>>> JHybridRNStartIoSdkSpec::loadNativeAds(double numberOfAds, std::optional<double> primaryImageSize, std::optional<double> secondaryImageSize) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(double /* numberOfAds */, jni::alias_ref<jni::JDouble> /* primaryImageSize */, jni::alias_ref<jni::JDouble> /* secondaryImageSize */)>("loadNativeAds");
+    auto __result = method(_javaPart, numberOfAds, primaryImageSize.has_value() ? jni::JDouble::valueOf(primaryImageSize.value()) : nullptr, secondaryImageSize.has_value() ? jni::JDouble::valueOf(secondaryImageSize.value()) : nullptr);
+    return [&]() {
+      auto __promise = Promise<std::vector<NativeAdDetails>>::create();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
+        auto __result = jni::static_ref_cast<jni::JArrayClass<JNativeAdDetails>>(__boxedResult);
+        __promise->resolve([&]() {
+          size_t __size = __result->size();
+          std::vector<NativeAdDetails> __vector;
+          __vector.reserve(__size);
+          for (size_t __i = 0; __i < __size; __i++) {
+            auto __element = __result->getElement(__i);
+            __vector.push_back(__element->toCpp());
+          }
+          return __vector;
+        }());
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
+      });
+      return __promise;
+    }();
   }
 
 } // namespace margelo::nitro::rnstartiosdk

@@ -21,6 +21,8 @@
 #include "JFunc_void.hpp"
 #include "JFunc_void_std__optional_std__string_.hpp"
 #include "views/JHybridRNStartIoBannerStateUpdater.hpp"
+#include "JHybridRNStartIoNativeAdTouchAreaSpec.hpp"
+#include "views/JHybridRNStartIoNativeAdTouchAreaStateUpdater.hpp"
 #include "JHybridRNStartIoNativeAdSpec.hpp"
 #include "JFunc_void_NativeAdDetails.hpp"
 #include "JFunc_void_std__string.hpp"
@@ -59,6 +61,14 @@ struct JHybridRNStartIoNativeAdSpecImpl: public jni::JavaClass<JHybridRNStartIoN
     return javaPart->getJHybridRNStartIoNativeAdSpec();
   }
 };
+struct JHybridRNStartIoNativeAdTouchAreaSpecImpl: public jni::JavaClass<JHybridRNStartIoNativeAdTouchAreaSpecImpl, JHybridRNStartIoNativeAdTouchAreaSpec::JavaPart> {
+  static constexpr auto kJavaDescriptor = "Lcom/rnstartiosdk/RNStartIoNativeAdTouchArea;";
+  static std::shared_ptr<JHybridRNStartIoNativeAdTouchAreaSpec> create() {
+    static const auto constructorFn = javaClassStatic()->getConstructor<JHybridRNStartIoNativeAdTouchAreaSpecImpl::javaobject()>();
+    jni::local_ref<JHybridRNStartIoNativeAdTouchAreaSpec::JavaPart> javaPart = javaClassStatic()->newObject(constructorFn);
+    return javaPart->getJHybridRNStartIoNativeAdTouchAreaSpec();
+  }
+};
 
 void registerAllNatives() {
   using namespace margelo::nitro;
@@ -71,6 +81,8 @@ void registerAllNatives() {
   margelo::nitro::rnstartiosdk::JFunc_void_cxx::registerNatives();
   margelo::nitro::rnstartiosdk::JFunc_void_std__optional_std__string__cxx::registerNatives();
   margelo::nitro::rnstartiosdk::views::JHybridRNStartIoBannerStateUpdater::registerNatives();
+  margelo::nitro::rnstartiosdk::JHybridRNStartIoNativeAdTouchAreaSpec::CxxPart::registerNatives();
+  margelo::nitro::rnstartiosdk::views::JHybridRNStartIoNativeAdTouchAreaStateUpdater::registerNatives();
   margelo::nitro::rnstartiosdk::JHybridRNStartIoNativeAdSpec::CxxPart::registerNatives();
   margelo::nitro::rnstartiosdk::JFunc_void_NativeAdDetails_cxx::registerNatives();
   margelo::nitro::rnstartiosdk::JFunc_void_std__string_cxx::registerNatives();
@@ -93,6 +105,12 @@ void registerAllNatives() {
     "RNStartIoNativeAd",
     []() -> std::shared_ptr<HybridObject> {
       return JHybridRNStartIoNativeAdSpecImpl::create();
+    }
+  );
+  HybridObjectRegistry::registerHybridObjectConstructor(
+    "RNStartIoNativeAdTouchArea",
+    []() -> std::shared_ptr<HybridObject> {
+      return JHybridRNStartIoNativeAdTouchAreaSpecImpl::create();
     }
   );
 }

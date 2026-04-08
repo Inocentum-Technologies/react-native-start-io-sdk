@@ -36,12 +36,16 @@ target_sources(
   ../nitrogen/generated/shared/c++/HybridRNStartIoSdkSpec.cpp
   ../nitrogen/generated/shared/c++/HybridRNStartIoBannerSpec.cpp
   ../nitrogen/generated/shared/c++/views/HybridRNStartIoBannerComponent.cpp
+  ../nitrogen/generated/shared/c++/HybridRNStartIoNativeAdTouchAreaSpec.cpp
+  ../nitrogen/generated/shared/c++/views/HybridRNStartIoNativeAdTouchAreaComponent.cpp
   ../nitrogen/generated/shared/c++/HybridRNStartIoNativeAdSpec.cpp
   ../nitrogen/generated/shared/c++/views/HybridRNStartIoNativeAdComponent.cpp
   # Android-specific Nitrogen C++ sources
   ../nitrogen/generated/android/c++/JHybridRNStartIoSdkSpec.cpp
   ../nitrogen/generated/android/c++/JHybridRNStartIoBannerSpec.cpp
   ../nitrogen/generated/android/c++/views/JHybridRNStartIoBannerStateUpdater.cpp
+  ../nitrogen/generated/android/c++/JHybridRNStartIoNativeAdTouchAreaSpec.cpp
+  ../nitrogen/generated/android/c++/views/JHybridRNStartIoNativeAdTouchAreaStateUpdater.cpp
   ../nitrogen/generated/android/c++/JHybridRNStartIoNativeAdSpec.cpp
   ../nitrogen/generated/android/c++/views/JHybridRNStartIoNativeAdStateUpdater.cpp
 )

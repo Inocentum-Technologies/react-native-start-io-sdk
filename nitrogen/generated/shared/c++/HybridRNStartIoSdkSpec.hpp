@@ -19,6 +19,8 @@ namespace margelo::nitro::rnstartiosdk { struct InitializeSdkParams; }
 namespace margelo::nitro::rnstartiosdk { enum class AdType; }
 // Forward declaration of `AdResultType` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { enum class AdResultType; }
+// Forward declaration of `NativeAdDetails` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { struct NativeAdDetails; }
 
 #include "InitializeSdkParams.hpp"
 #include <string>
@@ -27,6 +29,8 @@ namespace margelo::nitro::rnstartiosdk { enum class AdResultType; }
 #include "AdResultType.hpp"
 #include <functional>
 #include <optional>
+#include "NativeAdDetails.hpp"
+#include <vector>
 
 namespace margelo::nitro::rnstartiosdk {
 
@@ -64,6 +68,7 @@ namespace margelo::nitro::rnstartiosdk {
       virtual void setIABUSPrivacyString(const std::string& iabusPrivacyString) = 0;
       virtual std::shared_ptr<Promise<void>> loadAd(AdType adType) = 0;
       virtual void showAd(const std::optional<std::function<void(AdResultType /* adResult */)>>& adResultCallback) = 0;
+      virtual std::shared_ptr<Promise<std::vector<NativeAdDetails>>> loadNativeAds(double numberOfAds, std::optional<double> primaryImageSize, std::optional<double> secondaryImageSize) = 0;
 
     protected:
       // Hybrid Setup

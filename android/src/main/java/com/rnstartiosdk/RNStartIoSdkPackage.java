@@ -28,6 +28,7 @@ public class RNStartIoSdkPackage extends BaseReactPackage {
     List<ViewManager> viewManagers = new ArrayList<>();
     viewManagers.add(new HybridRNStartIoBannerManager());
     viewManagers.add(new HybridRNStartIoNativeAdManager());
+    viewManagers.add(new HybridRNStartIoNativeAdTouchAreaManager());
     return viewManagers;
   }
 

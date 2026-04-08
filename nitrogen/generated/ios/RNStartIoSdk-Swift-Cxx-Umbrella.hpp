@@ -8,6 +8,10 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `AdInitPreferences` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { struct AdInitPreferences; }
+// Forward declaration of `AdPreferenceGender` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { enum class AdPreferenceGender; }
 // Forward declaration of `AdResultType` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { enum class AdResultType; }
 // Forward declaration of `AdType` to properly resolve imports.
@@ -20,6 +24,8 @@ namespace margelo::nitro::rnstartiosdk { enum class CampaignAction; }
 namespace margelo::nitro::rnstartiosdk { class HybridRNStartIoBannerSpec; }
 // Forward declaration of `HybridRNStartIoNativeAdSpec` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { class HybridRNStartIoNativeAdSpec; }
+// Forward declaration of `HybridRNStartIoNativeAdTouchAreaSpec` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { class HybridRNStartIoNativeAdTouchAreaSpec; }
 // Forward declaration of `HybridRNStartIoSdkSpec` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { class HybridRNStartIoSdkSpec; }
 // Forward declaration of `InitializeSdkParams` to properly resolve imports.
@@ -28,12 +34,15 @@ namespace margelo::nitro::rnstartiosdk { struct InitializeSdkParams; }
 namespace margelo::nitro::rnstartiosdk { struct NativeAdDetails; }
 
 // Include C++ defined types
+#include "AdInitPreferences.hpp"
+#include "AdPreferenceGender.hpp"
 #include "AdResultType.hpp"
 #include "AdType.hpp"
 #include "BannerFormat.hpp"
 #include "CampaignAction.hpp"
 #include "HybridRNStartIoBannerSpec.hpp"
 #include "HybridRNStartIoNativeAdSpec.hpp"
+#include "HybridRNStartIoNativeAdTouchAreaSpec.hpp"
 #include "HybridRNStartIoSdkSpec.hpp"
 #include "InitializeSdkParams.hpp"
 #include "NativeAdDetails.hpp"
@@ -44,6 +53,7 @@ namespace margelo::nitro::rnstartiosdk { struct NativeAdDetails; }
 #include <memory>
 #include <optional>
 #include <string>
+#include <vector>
 
 // C++ helpers for Swift
 #include "RNStartIoSdk-Swift-Cxx-Bridge.hpp"
@@ -59,6 +69,8 @@ namespace margelo::nitro::rnstartiosdk { struct NativeAdDetails; }
 namespace RNStartIoSdk { class HybridRNStartIoBannerSpec_cxx; }
 // Forward declaration of `HybridRNStartIoNativeAdSpec_cxx` to properly resolve imports.
 namespace RNStartIoSdk { class HybridRNStartIoNativeAdSpec_cxx; }
+// Forward declaration of `HybridRNStartIoNativeAdTouchAreaSpec_cxx` to properly resolve imports.
+namespace RNStartIoSdk { class HybridRNStartIoNativeAdTouchAreaSpec_cxx; }
 // Forward declaration of `HybridRNStartIoSdkSpec_cxx` to properly resolve imports.
 namespace RNStartIoSdk { class HybridRNStartIoSdkSpec_cxx; }
 

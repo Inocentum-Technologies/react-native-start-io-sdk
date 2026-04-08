@@ -59,6 +59,7 @@ namespace margelo::nitro::rnstartiosdk {
     void setIABUSPrivacyString(const std::string& iabusPrivacyString) override;
     std::shared_ptr<Promise<void>> loadAd(AdType adType) override;
     void showAd(const std::optional<std::function<void(AdResultType /* adResult */)>>& adResultCallback) override;
+    std::shared_ptr<Promise<std::vector<NativeAdDetails>>> loadNativeAds(double numberOfAds, std::optional<double> primaryImageSize, std::optional<double> secondaryImageSize) override;
 
   private:
     jni::global_ref<JHybridRNStartIoSdkSpec::JavaPart> _javaPart;

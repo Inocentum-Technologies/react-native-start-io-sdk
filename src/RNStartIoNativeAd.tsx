@@ -3,6 +3,7 @@ import { getHostComponent } from "react-native-nitro-modules";
 import type { ViewStyle } from "react-native";
 import RNStartIoNativeAdConfig from "../nitrogen/generated/shared/json/RNStartIoNativeAdConfig.json";
 import type { RNStartIoNativeAdMethods, RNStartIoNativeAdProps, NativeAdDetails } from "./views/rn-start-io-native-ad.nitro";
+import { StartIoNativeAdTouchArea, loadNativeAds } from ".";
 export type { NativeAdDetails };
 
 const RNStartIoNativeAd = getHostComponent<
@@ -11,6 +12,8 @@ const RNStartIoNativeAd = getHostComponent<
 >("RNStartIoNativeAd", () => RNStartIoNativeAdConfig);
 
 /**
+ * @deprecated Use {@link StartIoNativeAdTouchArea} with {@link loadNativeAds} instead.
+ * 
  * Renders a Start.io **Native Ad** container that handles its own native click events.
  *
  * This component does **not** render any visible UI by itself — instead, it occupies

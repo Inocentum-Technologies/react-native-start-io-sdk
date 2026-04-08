@@ -10,6 +10,10 @@
 #include <fbjni/fbjni.h>
 #include "InitializeSdkParams.hpp"
 
+#include "AdInitPreferences.hpp"
+#include "AdPreferenceGender.hpp"
+#include "JAdInitPreferences.hpp"
+#include "JAdPreferenceGender.hpp"
 #include <optional>
 #include <string>
 
@@ -36,13 +40,16 @@ namespace margelo::nitro::rnstartiosdk {
       jni::local_ref<jni::JString> androidAppId = this->getFieldValue(fieldAndroidAppId);
       static const auto fieldIOSAppId = clazz->getField<jni::JString>("iOSAppId");
       jni::local_ref<jni::JString> iOSAppId = this->getFieldValue(fieldIOSAppId);
+      static const auto fieldAdPreferences = clazz->getField<JAdInitPreferences>("adPreferences");
+      jni::local_ref<JAdInitPreferences> adPreferences = this->getFieldValue(fieldAdPreferences);
       static const auto fieldTestAd = clazz->getField<jni::JBoolean>("testAd");
       jni::local_ref<jni::JBoolean> testAd = this->getFieldValue(fieldTestAd);
       static const auto fieldReturnAd = clazz->getField<jni::JBoolean>("returnAd");
       jni::local_ref<jni::JBoolean> returnAd = this->getFieldValue(fieldReturnAd);
       return InitializeSdkParams(
-        androidAppId->toStdString(),
-        iOSAppId->toStdString(),
+        androidAppId != nullptr ? std::make_optional(androidAppId->toStdString()) : std::nullopt,
+        iOSAppId != nullptr ? std::make_optional(iOSAppId->toStdString()) : std::nullopt,
+        adPreferences != nullptr ? std::make_optional(adPreferences->toCpp()) : std::nullopt,
         testAd != nullptr ? std::make_optional(static_cast<bool>(testAd->value())) : std::nullopt,
         returnAd != nullptr ? std::make_optional(static_cast<bool>(returnAd->value())) : std::nullopt
       );
@@ -54,13 +61,14 @@ namespace margelo::nitro::rnstartiosdk {
      */
     [[maybe_unused]]
     static jni::local_ref<JInitializeSdkParams::javaobject> fromCpp(const InitializeSdkParams& value) {
-      using JSignature = JInitializeSdkParams(jni::alias_ref<jni::JString>, jni::alias_ref<jni::JString>, jni::alias_ref<jni::JBoolean>, jni::alias_ref<jni::JBoolean>);
+      using JSignature = JInitializeSdkParams(jni::alias_ref<jni::JString>, jni::alias_ref<jni::JString>, jni::alias_ref<JAdInitPreferences>, jni::alias_ref<jni::JBoolean>, jni::alias_ref<jni::JBoolean>);
       static const auto clazz = javaClassStatic();
       static const auto create = clazz->getStaticMethod<JSignature>("fromCpp");
       return create(
         clazz,
-        jni::make_jstring(value.androidAppId),
-        jni::make_jstring(value.iOSAppId),
+        value.androidAppId.has_value() ? jni::make_jstring(value.androidAppId.value()) : nullptr,
+        value.iOSAppId.has_value() ? jni::make_jstring(value.iOSAppId.value()) : nullptr,
+        value.adPreferences.has_value() ? JAdInitPreferences::fromCpp(value.adPreferences.value()) : nullptr,
         value.testAd.has_value() ? jni::JBoolean::valueOf(value.testAd.value()) : nullptr,
         value.returnAd.has_value() ? jni::JBoolean::valueOf(value.returnAd.value()) : nullptr
       );

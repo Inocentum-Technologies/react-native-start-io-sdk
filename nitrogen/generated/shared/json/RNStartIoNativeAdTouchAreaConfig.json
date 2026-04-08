@@ -1,0 +1,10 @@
+{
+  "uiViewClassName": "RNStartIoNativeAdTouchArea",
+  "supportsRawText": false,
+  "bubblingEventTypes": {},
+  "directEventTypes": {},
+  "validAttributes": {
+    "adIndex": true,
+    "hybridRef": true
+  }
+}

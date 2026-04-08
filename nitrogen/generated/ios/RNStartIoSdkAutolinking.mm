@@ -13,6 +13,7 @@
 #include "HybridRNStartIoSdkSpecSwift.hpp"
 #include "HybridRNStartIoBannerSpecSwift.hpp"
 #include "HybridRNStartIoNativeAdSpecSwift.hpp"
+#include "HybridRNStartIoNativeAdTouchAreaSpecSwift.hpp"
 
 @interface RNStartIoSdkAutolinking : NSObject
 @end
@@ -41,6 +42,13 @@
     "RNStartIoNativeAd",
     []() -> std::shared_ptr<HybridObject> {
       std::shared_ptr<HybridRNStartIoNativeAdSpec> hybridObject = RNStartIoSdk::RNStartIoSdkAutolinking::createRNStartIoNativeAd();
+      return hybridObject;
+    }
+  );
+  HybridObjectRegistry::registerHybridObjectConstructor(
+    "RNStartIoNativeAdTouchArea",
+    []() -> std::shared_ptr<HybridObject> {
+      std::shared_ptr<HybridRNStartIoNativeAdTouchAreaSpec> hybridObject = RNStartIoSdk::RNStartIoSdkAutolinking::createRNStartIoNativeAdTouchArea();
       return hybridObject;
     }
   );

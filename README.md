@@ -43,24 +43,40 @@ This must be called **once** before loading or showing any ads.
 - `androidAppId` (**required**) — Your Start.io application ID for Android.
 - `iOSAppId` (**required**) — Your Start.io application ID for iOS.
 - `testAd?` — Optional. Set to `true` to load test ads instead of live ads. Default: `false`.
-- `returnAd?` — (**deprecated**) Optional. Set to `false` to disable return ads (ads shown when returning to the app). Default: `true`.
+- `returnAd?` — (**deprecated**) Optional. Set to `false` to disable return ads. Default: `true`.
+- `adPreferences?` — Optional. Target ads by user demographics:
+  - `age?` — User's age.
+  - `gender?` — `AdPreferencesGender.MALE` or `AdPreferencesGender.FEMALE`.
+
+> [!note]
+> At least one of `androidAppId` or `iOSAppId` is **required**.
 
 **Example:**
 ```tsx
-import { initializeStartIoSdk } from 'react-native-start-io-sdk';
+import { initializeStartIoSdk, AdPreferencesGender } from 'react-native-start-io-sdk';
 
-// Initialize with live ads and return ads enabled
+// Initialize with live ads
 initializeStartIoSdk({
   androidAppId: 'ANDROID_APP_ID',
   iOSAppId: 'IOS_APP_ID'
 });
 
-// Initialize with test ads enabled and return ads disabled
+// Initialize with test ads and return ads disabled
 initializeStartIoSdk({
   androidAppId: 'ANDROID_APP_ID',
   iOSAppId: 'IOS_APP_ID',
   testAd: true,
   returnAd: false
+});
+
+// Initialize with ad preferences (demographic targeting)
+initializeStartIoSdk({
+  androidAppId: 'ANDROID_APP_ID',
+  iOSAppId: 'IOS_APP_ID',
+  adPreferences: {
+    age: 25,
+    gender: AdPreferencesGender.MALE
+  }
 });
 ```
 
@@ -171,9 +187,88 @@ loadAd(AdType.VIDEO).then(() => {
 
 ### 4. Native Ads
 
-The `StartIoNativeAd` component **does not render UI** — it overlays your custom layout to handle native click events.
+Use `loadNativeAds` to fetch native ad data, then render your own UI and overlay `StartIoNativeAdTouchArea` to handle clicks natively.
 
-**Example:**
+> [!important]
+> Do **not** handle touch/click events from views within your native ad layout. All clicks are managed natively by `StartIoNativeAdTouchArea`.
+
+#### `loadNativeAds` — Fetching Native Ads
+
+```ts
+import { loadNativeAds, NativeAdImageSize } from 'react-native-start-io-sdk';
+
+// Load up to 3 native ads with default image sizes
+const ads = await loadNativeAds(3);
+
+// Load with custom image sizes
+const ads = await loadNativeAds(
+  5,
+  NativeAdImageSize.SIZE_340X340,
+  NativeAdImageSize.SIZE_340X340
+);
+```
+
+**`NativeAdImageSize` values:** `SIZE_72X72`, `SIZE_100X100`, `SIZE_150X150` *(default)*, `SIZE_340X340`, `SIZE_1200X628`
+
+> [!note]
+> `SIZE_1200X628` is only supported for `primaryImageSize`. If used as `secondaryImageSize`, the default (`SIZE_150X150`) will be used instead.
+
+> [!tip]
+> Don't reload native ads too frequently — a 45-second interval (matching the default banner refresh rate) is recommended.
+
+#### `StartIoNativeAdTouchArea` — Rendering Native Ads
+
+Place `StartIoNativeAdTouchArea` as an absolutely positioned overlay inside your ad container. Pass the `adIndex` matching the ad's position in the array returned by `loadNativeAds`.
+
+```tsx
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, Button, StyleSheet } from 'react-native';
+import {
+  loadNativeAds,
+  StartIoNativeAdTouchArea,
+  NativeAdDetails
+} from 'react-native-start-io-sdk';
+
+export const NativeAdExample = () => {
+  const [nativeAds, setNativeAds] = useState<NativeAdDetails[]>([]);
+
+  useEffect(() => {
+    loadNativeAds(3).then(setNativeAds);
+  }, []);
+
+  return (
+    <View>
+      {nativeAds.map((adData, index) => (
+        <View key={index} style={{ position: 'relative', width: 300, height: 250 }}>
+          <View style={styles.adContainer}>
+            {adData.imageUrl && (
+              <Image source={{ uri: adData.imageUrl }} style={styles.image} />
+            )}
+            <Text style={styles.title}>{adData.title}</Text>
+            <Text style={styles.description}>{adData.description}</Text>
+            {/* Click is handled natively — do not attach onPress */}
+            <Button title={adData.callToAction} onPress={() => {}} />
+          </View>
+          {/* Overlay to capture native clicks */}
+          <StartIoNativeAdTouchArea adIndex={index} />
+        </View>
+      ))}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  adContainer: { flex: 1, padding: 8, backgroundColor: '#fff' },
+  image: { width: '100%', height: 150, resizeMode: 'cover' },
+  title: { fontWeight: 'bold', fontSize: 16, marginTop: 8 },
+  description: { fontSize: 14, color: '#555', marginVertical: 4 },
+});
+```
+
+#### `StartIoNativeAd` — *(Deprecated)*
+
+> [!warning]
+> `StartIoNativeAd` is deprecated. Use `loadNativeAds` + `StartIoNativeAdTouchArea` instead.
 
 ```tsx
 import React, { useState } from 'react';
@@ -192,6 +287,7 @@ export const NativeAdExample = () => {
           )}
           <Text style={styles.title}>{adData.title}</Text>
           <Text style={styles.description}>{adData.description}</Text>
+          {/* Click is handled natively — do not attach onPress */}
           <Button title={adData.callToAction} onPress={() => {}} />
         </View>
       )}
@@ -209,7 +305,6 @@ const styles = StyleSheet.create({
   title: { fontWeight: 'bold', fontSize: 16, marginTop: 8 },
   description: { fontSize: 14, color: '#555', marginVertical: 4 },
 });
-
 ```
 
 ### 5. Compliance and Privacy
@@ -240,36 +335,41 @@ setIABUSPrivacyString('1YNY');
 
 ### Functions
 
--   `initializeStartIoSdk(params: InitializeSdkParams)` — Initialize SDK.
-
--   `setUserConsent(currentTimeMillis, userConsent)` — Set user consent for personalized ads (GDPR).
-
--   `setIABUSPrivacyString(iabusPrivacyString)` — Set IAB US Privacy String (CCPA).
-    
--   `loadAd(adType?)` — Load an ad.
-    
--   `showAd(callback?)` — Show a loaded ad.
-    
+| Function | Description |
+|---|---|
+| `initializeStartIoSdk(params)` | Initialize the SDK. Must be called once before loading any ads. |
+| `loadAd(adType?)` | Load an interstitial/video ad. Defaults to `AdType.AUTOMATIC`. |
+| `showAd(callback?)` | Show a previously loaded ad. |
+| `loadNativeAds(numberOfAds, primaryImageSize?, secondaryImageSize?)` | Fetch native ad data. Returns `Promise<NativeAdDetails[]>`. |
+| `setUserConsent(currentTimeMillis, userConsent)` | Set GDPR user consent. |
+| `setIABUSPrivacyString(iabusPrivacyString)` | Set CCPA IAB US Privacy String. |
 
 ### Components
 
--   `StartIoBannerAd` — 320x50 banner.
-    
--   `StartIoMrecAd` — 300x250 medium rectangle.
-    
--   `StartIoCoverAd` — 300x157 cover banner.
-    
--   `StartIoNativeAd` — Native ad click handler overlay.
-    
+| Component | Description |
+|---|---|
+| `StartIoBannerAd` | 320×50 banner ad. |
+| `StartIoMrecAd` | 300×250 medium rectangle ad. |
+| `StartIoCoverAd` | 300×157 cover banner ad. |
+| `StartIoNativeAdTouchArea` | Overlay to handle native ad clicks (use with `loadNativeAds`). |
+| `StartIoNativeAd` | *(Deprecated)* Legacy native ad click overlay. |
+
+### Enums
+
+| Enum | Values |
+|---|---|
+| `AdType` | `AUTOMATIC`, `FULLPAGE`, `REWARDED_VIDEO`, `VIDEO` *(+ deprecated: `OFFERWALL`, `OVERLAY`)* |
+| `AdResultType` | `AdDisPlayed`, `AdClicked`, `AdHidden`, `AdNotDisplayed`, `AdRewarded` |
+| `AdPreferencesGender` | `MALE`, `FEMALE` |
+| `NativeAdImageSize` | `SIZE_72X72`, `SIZE_100X100`, `SIZE_150X150` *(default)*, `SIZE_340X340`, `SIZE_1200X628` *(primary only)* |
 
 ### Types
 
--   `AdType` — AUTOMATIC, FULLPAGE, REWARDED_VIDEO, VIDEO, etc.
-    
--   `AdResultType` — AdDisplayed, AdClicked, AdHidden, AdNotDisplayed, AdRewarded.
-    
--   `NativeAdDetails` — Data for building native ad UI.
-    
+| Type | Description |
+|---|---|
+| `InitializeSdkParams` | Params for `initializeStartIoSdk`: `androidAppId`, `iOSAppId`, `testAd`, `returnAd`, `adPreferences`. |
+| `AdInitPreferences` | `{ age?: number; gender?: AdPreferencesGender }` |
+| `NativeAdDetails` | Data object for building native ad UI: `title`, `description`, `rating`, `imageUrl`, `secondaryImageUrl`, `installs`, `category`, `packageName`, `campaignAction`, `callToAction`. |
 
 ## Credits
 

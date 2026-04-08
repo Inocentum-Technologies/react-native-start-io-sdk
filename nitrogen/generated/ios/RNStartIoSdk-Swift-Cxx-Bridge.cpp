@@ -10,6 +10,7 @@
 // Include C++ implementation defined types
 #include "HybridRNStartIoBannerSpecSwift.hpp"
 #include "HybridRNStartIoNativeAdSpecSwift.hpp"
+#include "HybridRNStartIoNativeAdTouchAreaSpecSwift.hpp"
 #include "HybridRNStartIoSdkSpecSwift.hpp"
 #include "RNStartIoSdk-Swift-Cxx-Umbrella.hpp"
 #include <NitroModules/NitroDefines.hpp>
@@ -37,6 +38,14 @@ namespace margelo::nitro::rnstartiosdk::bridge::swift {
     auto swiftClosure = RNStartIoSdk::Func_void_AdResultType::fromUnsafe(swiftClosureWrapper);
     return [swiftClosure = std::move(swiftClosure)](AdResultType adResult) mutable -> void {
       swiftClosure.call(static_cast<int>(adResult));
+    };
+  }
+  
+  // pragma MARK: std::function<void(const std::vector<NativeAdDetails>& /* result */)>
+  Func_void_std__vector_NativeAdDetails_ create_Func_void_std__vector_NativeAdDetails_(void* NON_NULL swiftClosureWrapper) noexcept {
+    auto swiftClosure = RNStartIoSdk::Func_void_std__vector_NativeAdDetails_::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::vector<NativeAdDetails>& result) mutable -> void {
+      swiftClosure.call(result);
     };
   }
   
@@ -77,6 +86,22 @@ namespace margelo::nitro::rnstartiosdk::bridge::swift {
     }
     #endif
     RNStartIoSdk::HybridRNStartIoBannerSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
+    return swiftPart.toUnsafe();
+  }
+  
+  // pragma MARK: std::shared_ptr<HybridRNStartIoNativeAdTouchAreaSpec>
+  std::shared_ptr<HybridRNStartIoNativeAdTouchAreaSpec> create_std__shared_ptr_HybridRNStartIoNativeAdTouchAreaSpec_(void* NON_NULL swiftUnsafePointer) noexcept {
+    RNStartIoSdk::HybridRNStartIoNativeAdTouchAreaSpec_cxx swiftPart = RNStartIoSdk::HybridRNStartIoNativeAdTouchAreaSpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::rnstartiosdk::HybridRNStartIoNativeAdTouchAreaSpecSwift>(swiftPart);
+  }
+  void* NON_NULL get_std__shared_ptr_HybridRNStartIoNativeAdTouchAreaSpec_(std__shared_ptr_HybridRNStartIoNativeAdTouchAreaSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::rnstartiosdk::HybridRNStartIoNativeAdTouchAreaSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::rnstartiosdk::HybridRNStartIoNativeAdTouchAreaSpecSwift>(cppType);
+    #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridRNStartIoNativeAdTouchAreaSpec\" is not implemented in Swift!");
+    }
+    #endif
+    RNStartIoSdk::HybridRNStartIoNativeAdTouchAreaSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
     return swiftPart.toUnsafe();
   }
   

@@ -19,6 +19,7 @@ namespace margelo::nitro::rnstartiosdk {
       prototype.registerHybridMethod("setIABUSPrivacyString", &HybridRNStartIoSdkSpec::setIABUSPrivacyString);
       prototype.registerHybridMethod("loadAd", &HybridRNStartIoSdkSpec::loadAd);
       prototype.registerHybridMethod("showAd", &HybridRNStartIoSdkSpec::showAd);
+      prototype.registerHybridMethod("loadNativeAds", &HybridRNStartIoSdkSpec::loadNativeAds);
     });
   }
 

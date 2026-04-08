@@ -198,4 +198,43 @@ open class HybridRNStartIoSdkSpec_cxx {
       return bridge.create_Result_void_(__exceptionPtr)
     }
   }
+  
+  @inline(__always)
+  public final func loadNativeAds(numberOfAds: Double, primaryImageSize: bridge.std__optional_double_, secondaryImageSize: bridge.std__optional_double_) -> bridge.Result_std__shared_ptr_Promise_std__vector_NativeAdDetails____ {
+    do {
+      let __result = try self.__implementation.loadNativeAds(numberOfAds: numberOfAds, primaryImageSize: { () -> Double? in
+        if bridge.has_value_std__optional_double_(primaryImageSize) {
+          let __unwrapped = bridge.get_std__optional_double_(primaryImageSize)
+          return __unwrapped
+        } else {
+          return nil
+        }
+      }(), secondaryImageSize: { () -> Double? in
+        if bridge.has_value_std__optional_double_(secondaryImageSize) {
+          let __unwrapped = bridge.get_std__optional_double_(secondaryImageSize)
+          return __unwrapped
+        } else {
+          return nil
+        }
+      }())
+      let __resultCpp = { () -> bridge.std__shared_ptr_Promise_std__vector_NativeAdDetails___ in
+        let __promise = bridge.create_std__shared_ptr_Promise_std__vector_NativeAdDetails___()
+        let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_std__vector_NativeAdDetails___(__promise)
+        __result
+          .then({ __result in __promiseHolder.resolve({ () -> bridge.std__vector_NativeAdDetails_ in
+              var __vector = bridge.create_std__vector_NativeAdDetails_(__result.count)
+              for __item in __result {
+                __vector.push_back(__item)
+              }
+              return __vector
+            }()) })
+          .catch({ __error in __promiseHolder.reject(__error.toCpp()) })
+        return __promise
+      }()
+      return bridge.create_Result_std__shared_ptr_Promise_std__vector_NativeAdDetails____(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_std__shared_ptr_Promise_std__vector_NativeAdDetails____(__exceptionPtr)
+    }
+  }
 }

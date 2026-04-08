@@ -18,8 +18,26 @@ public extension InitializeSdkParams {
   /**
    * Create a new instance of `InitializeSdkParams`.
    */
-  init(androidAppId: String, iOSAppId: String, testAd: Bool?, returnAd: Bool?) {
-    self.init(std.string(androidAppId), std.string(iOSAppId), { () -> bridge.std__optional_bool_ in
+  init(androidAppId: String?, iOSAppId: String?, adPreferences: AdInitPreferences?, testAd: Bool?, returnAd: Bool?) {
+    self.init({ () -> bridge.std__optional_std__string_ in
+      if let __unwrappedValue = androidAppId {
+        return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_std__string_ in
+      if let __unwrappedValue = iOSAppId {
+        return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_AdInitPreferences_ in
+      if let __unwrappedValue = adPreferences {
+        return bridge.create_std__optional_AdInitPreferences_(__unwrappedValue)
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_bool_ in
       if let __unwrappedValue = testAd {
         return bridge.create_std__optional_bool_(__unwrappedValue)
       } else {
@@ -35,13 +53,32 @@ public extension InitializeSdkParams {
   }
 
   @inline(__always)
-  var androidAppId: String {
-    return String(self.__androidAppId)
+  var androidAppId: String? {
+    return { () -> String? in
+      if bridge.has_value_std__optional_std__string_(self.__androidAppId) {
+        let __unwrapped = bridge.get_std__optional_std__string_(self.__androidAppId)
+        return String(__unwrapped)
+      } else {
+        return nil
+      }
+    }()
   }
   
   @inline(__always)
-  var iOSAppId: String {
-    return String(self.__iOSAppId)
+  var iOSAppId: String? {
+    return { () -> String? in
+      if bridge.has_value_std__optional_std__string_(self.__iOSAppId) {
+        let __unwrapped = bridge.get_std__optional_std__string_(self.__iOSAppId)
+        return String(__unwrapped)
+      } else {
+        return nil
+      }
+    }()
+  }
+  
+  @inline(__always)
+  var adPreferences: AdInitPreferences? {
+    return self.__adPreferences.value
   }
   
   @inline(__always)

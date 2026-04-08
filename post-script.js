@@ -18,9 +18,10 @@ const androidWorkaround = async () => {
 
   const importIssueClasses = [
     'HybridRNStartIoBannerManager',
-    'HybridRNStartIoNativeAdManager'
+    'HybridRNStartIoNativeAdManager',
+    'HybridRNStartIoNativeAdTouchAreaManager'
   ];
-  
+
   importIssueClasses.forEach(async className => {
     let viewManagerFile = path.join(
       process.cwd(),

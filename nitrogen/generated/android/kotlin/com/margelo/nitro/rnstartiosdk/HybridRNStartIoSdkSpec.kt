@@ -53,6 +53,10 @@ abstract class HybridRNStartIoSdkSpec: HybridObject() {
     val __result = showAd(adResultCallback?.let { it })
     return __result
   }
+  
+  @DoNotStrip
+  @Keep
+  abstract fun loadNativeAds(numberOfAds: Double, primaryImageSize: Double?, secondaryImageSize: Double?): Promise<Array<NativeAdDetails>>
 
   // Default implementation of `HybridObject.toString()`
   override fun toString(): String {

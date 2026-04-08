@@ -18,6 +18,7 @@ public protocol HybridRNStartIoSdkSpec_protocol: HybridObject {
   func setIABUSPrivacyString(iabusPrivacyString: String) throws -> Void
   func loadAd(adType: AdType) throws -> Promise<Void>
   func showAd(adResultCallback: ((_ adResult: AdResultType) -> Void)?) throws -> Void
+  func loadNativeAds(numberOfAds: Double, primaryImageSize: Double?, secondaryImageSize: Double?) throws -> Promise<[NativeAdDetails]>
 }
 
 public extension HybridRNStartIoSdkSpec_protocol {

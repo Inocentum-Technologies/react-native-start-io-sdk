@@ -14,18 +14,31 @@ namespace RNStartIoSdk { class HybridRNStartIoSdkSpec_cxx; }
 
 // Forward declaration of `InitializeSdkParams` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { struct InitializeSdkParams; }
+// Forward declaration of `AdInitPreferences` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { struct AdInitPreferences; }
+// Forward declaration of `AdPreferenceGender` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { enum class AdPreferenceGender; }
 // Forward declaration of `AdType` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { enum class AdType; }
 // Forward declaration of `AdResultType` to properly resolve imports.
 namespace margelo::nitro::rnstartiosdk { enum class AdResultType; }
+// Forward declaration of `NativeAdDetails` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { struct NativeAdDetails; }
+// Forward declaration of `CampaignAction` to properly resolve imports.
+namespace margelo::nitro::rnstartiosdk { enum class CampaignAction; }
 
 #include "InitializeSdkParams.hpp"
 #include <string>
 #include <optional>
+#include "AdInitPreferences.hpp"
+#include "AdPreferenceGender.hpp"
 #include <NitroModules/Promise.hpp>
 #include "AdType.hpp"
 #include "AdResultType.hpp"
 #include <functional>
+#include "NativeAdDetails.hpp"
+#include <vector>
+#include "CampaignAction.hpp"
 
 #include "RNStartIoSdk-Swift-Cxx-Umbrella.hpp"
 
@@ -108,6 +121,14 @@ namespace margelo::nitro::rnstartiosdk {
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
+    }
+    inline std::shared_ptr<Promise<std::vector<NativeAdDetails>>> loadNativeAds(double numberOfAds, std::optional<double> primaryImageSize, std::optional<double> secondaryImageSize) override {
+      auto __result = _swiftPart.loadNativeAds(std::forward<decltype(numberOfAds)>(numberOfAds), primaryImageSize, secondaryImageSize);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
 
   private:

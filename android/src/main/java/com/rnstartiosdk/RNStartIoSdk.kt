@@ -14,6 +14,13 @@ import com.startapp.sdk.adsbase.adlisteners.AdDisplayListener
 import com.startapp.sdk.adsbase.adlisteners.AdEventListener
 import kotlinx.coroutines.flow.MutableStateFlow
 import androidx.core.content.edit
+import com.margelo.nitro.rnstartiosdk.AdPreferenceGender
+import com.margelo.nitro.rnstartiosdk.CampaignAction
+import com.margelo.nitro.rnstartiosdk.NativeAdDetails
+import com.startapp.sdk.ads.nativead.NativeAdPreferences
+import com.startapp.sdk.ads.nativead.StartAppNativeAd
+import com.startapp.sdk.adsbase.SDKAdPreferences
+import kotlin.collections.isNotEmpty
 
 class RNStartIoSdk : HybridRNStartIoSdkSpec() {
     private companion object {
@@ -25,10 +32,21 @@ class RNStartIoSdk : HybridRNStartIoSdkSpec() {
 
     override fun initializeSdk(params: InitializeSdkParams) {
         StartAppSDK.setTestAdsEnabled(params.testAd == true)
-        if (initializedFlow.value != true) {
+        if (initializedFlow.value != true && params.androidAppId != null) {
             applicationContext?.applicationContext?.let {
+                val sdkAdPreferences = SDKAdPreferences()
+                if(params.adPreferences != null) {
+                    if(params.adPreferences.age != null)
+                        sdkAdPreferences.age = params.adPreferences.age.toString()
+                    if(params.adPreferences.gender != null)
+                        sdkAdPreferences.gender = if (params.adPreferences.gender == AdPreferenceGender.MALE)
+                            SDKAdPreferences.Gender.MALE
+                        else
+                            SDKAdPreferences.Gender.FEMALE
+                }
                 StartAppSDK.initParams(it, params.androidAppId)
                     .setReturnAdsEnabled(params.returnAd == true)
+                    .setSdkAdPrefs(sdkAdPreferences)
                     .setCallback {
                         initializedFlow.value = true
                         Log.d(LOG_TAG, "Start.io SDK Initialized")
@@ -122,6 +140,63 @@ class RNStartIoSdk : HybridRNStartIoSdkSpec() {
         } ?: run {
             adResultCallback?.invoke(AdResultType.ADNOTDISPLAYED)
         }
+    }
+
+    override fun loadNativeAds(
+        numberOfAds: Double,
+        primaryImageSize: Double?,
+        secondaryImageSize: Double?
+    ): Promise<Array<NativeAdDetails>> {
+        val promise = Promise<Array<NativeAdDetails>>()
+
+        val nativeAd = StartAppNativeAd(applicationContext!!)
+        val nativeAdPreferences = NativeAdPreferences()
+        nativeAdPreferences.adsNumber = numberOfAds.toInt()
+        if (primaryImageSize != null)
+            nativeAdPreferences.primaryImageSize = primaryImageSize.toInt()
+        if (secondaryImageSize != null)
+            nativeAdPreferences.secondaryImageSize = secondaryImageSize.toInt()
+
+        nativeAd.setPreferences(nativeAdPreferences)
+        nativeAd.loadAd(object : AdEventListener {
+            override fun onReceiveAd(ad: Ad) {
+                Log.v(LOG_TAG, "loadNative: onReceiveAds")
+
+                val nativeAds = nativeAd.nativeAds
+                if (nativeAds != null && nativeAds.isNotEmpty()) {
+                    var adsArray = emptyArray<NativeAdDetails>()
+                    for (nativeAd in nativeAds) {
+                        val nativeAdDetails = nativeAd
+                        adsArray += NativeAdDetails(
+                            nativeAdDetails.title,
+                            nativeAdDetails.description,
+                            nativeAdDetails.rating.toDouble(),
+                            nativeAdDetails.imageUrl,
+                            nativeAdDetails.secondaryImageUrl,
+                            nativeAdDetails.installs,
+                            nativeAdDetails.category,
+                            nativeAdDetails.packageName,
+                            if (nativeAdDetails.campaignAction.name == CampaignAction.LAUNCH_APP.name)
+                                CampaignAction.LAUNCH_APP
+                            else CampaignAction.OPEN_MARKET,
+                            nativeAdDetails.callToAction
+                        )
+                    }
+                    NativeAdState.updateState(nativeAds)
+                    promise.resolve(adsArray)
+                } else {
+                    promise.reject(Throwable("No ads available"))
+                }
+            }
+
+            override fun onFailedToReceiveAd(ad: Ad?) {
+                Log.v(LOG_TAG, "loadNative: onFailedToReceiveAds: " + (ad?.errorMessage))
+                promise.reject(
+                    Throwable("Failed to load native ads")
+                )
+            }
+        })
+        return promise
     }
 
     private fun convertAdTypeEnumSafe(source: AdType): StartAppAd.AdMode {

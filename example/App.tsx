@@ -27,7 +27,10 @@ import {
   StartIoNativeAd,
   NativeAdDetails,
   setIABUSPrivacyString,
-  setUserConsent
+  setUserConsent,
+  loadNativeAds,
+  StartIoNativeAdTouchArea,
+  AdPreferencesGender
 } from 'react-native-start-io-sdk';
 
 const ANDROID_APP_ID = '205489527';
@@ -39,10 +42,15 @@ initializeStartIoSdk({
   iOSAppId: IOS_APP_ID,
   testAd: __DEV__, // use test ads in dev
   returnAd: true,  // show return ads by default
+  adPreferences: {
+    age: 25,
+    gender: AdPreferencesGender.MALE
+  }
 });
 
 const App: React.FC = () => {
   const [nativeAdData, setNativeAdData] = useState<NativeAdDetails | null>(null);
+  const [nativeAds, setNativeAds] = useState<NativeAdDetails[]>([]);
   const [lastInterstitialResult, setLastInterstitialResult] = useState<AdResultType | null>(null);
 
   // Helper to load + show any ad type
@@ -57,6 +65,17 @@ const App: React.FC = () => {
       });
     } catch (e) {
       Alert.alert('Ad Error', 'Failed to load/show ad.');
+    }
+  }, []);
+
+  const loadNativeAdDetails = useCallback(async () => {
+    try {
+      const ads = await loadNativeAds(10);
+      setNativeAds(ads);
+    } catch (e) {
+      console.log(e);
+
+      Alert.alert('Ad Error', 'Failed to load native ad.');
     }
   }, []);
 
@@ -174,9 +193,53 @@ const App: React.FC = () => {
           />
         </View>
 
-        {/* Native Ad Example */}
+        {/* Load Native Ads */}
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Native Ad (overlay + custom UI)</Text>
+          <Text style={styles.cardTitle}>Load & Show Interstitial/Video Ads</Text>
+
+          <View style={styles.row}>
+            <View style={styles.button}>
+              <Button
+                title="Load Native Ads"
+                onPress={() => loadNativeAdDetails()}
+              />
+            </View>
+          </View>
+        </View>
+
+        {/* Multiple Native Ad with StartIoNativeAdTouchArea */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Multiple Native Ads (overlay + custom UI)</Text>
+          {nativeAds.map((nativeAdData, index) => (
+            <View
+              key={index}
+              style={styles.nativeContainer}>
+              {nativeAdData.imageUrl ? (
+                <Image
+                  source={{ uri: nativeAdData.imageUrl }}
+                  style={styles.nativeImage}
+                />
+              ) : null}
+              <Text style={styles.nativeTitle} numberOfLines={1}>
+                {nativeAdData.title}
+              </Text>
+              <Text style={styles.nativeDesc} numberOfLines={2}>
+                {nativeAdData.description}
+              </Text>
+              <Text style={styles.nativeMeta}>
+                {nativeAdData.category} • ⭐ {nativeAdData.rating} • {nativeAdData.installs} installs
+              </Text>
+              <View style={styles.ctaButton}>
+                <Text style={styles.ctaText}>{nativeAdData.callToAction}</Text>
+              </View>
+              <StartIoNativeAdTouchArea adIndex={index} />
+            </View>
+          ))}
+        </View>
+
+        {/* Legacy Native Ad Example */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Legacy Single Native Ad (overlay + custom UI)</Text>
           <View style={styles.nativeContainer}>
             {nativeAdData ? (
               <View style={styles.nativeContent}>
@@ -212,7 +275,7 @@ const App: React.FC = () => {
             <StartIoNativeAd
               onLoadAd={(data) => {
                 setNativeAdData(data);
-                console.log('Native ad loaded', data);
+                console.log('Legacy Native ad loaded', data);
               }}
               onLoadError={(err) => {
                 console.log('Native ad error', err);
