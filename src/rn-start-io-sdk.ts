@@ -165,8 +165,8 @@ export function showAd(callback?: (adResult: AdResultType) => void) {
  * Clicks are handled by {@link StartIoNativeAdTouchArea} component, so make sure your buttons or other views won't intercept touch/click events.
  *
  * @param numberOfAds - The number of native ads to load.
- * @param [primaryImageSize=NativeAdImageSize.SIZE_100X100]{@link NativeAdImageSize} - The primary image size for native ads.
- * @param [secondaryImageSize=NativeAdImageSize.SIZE_100X100]{@link NativeAdImageSize} - The secondary image size for native ads.
+ * @param [primaryImageSize=NativeAdImageSize.SIZE_150X150]{@link NativeAdImageSize} - The primary image size for native ads.
+ * @param [secondaryImageSize=NativeAdImageSize.SIZE_150X150]{@link NativeAdImageSize} - The secondary image size for native ads.
  *
  * @example
  * ```tsx
@@ -184,8 +184,8 @@ export function showAd(callback?: (adResult: AdResultType) => void) {
  */
 export function loadNativeAds(
   numberOfAds: number,
-  primaryImageSize: NativeAdImageSize = NativeAdImageSize.SIZE_100X100,
-  secondaryImageSize: NativeAdImageSize = NativeAdImageSize.SIZE_100X100
+  primaryImageSize: NativeAdImageSize = NativeAdImageSize.SIZE_150X150,
+  secondaryImageSize: NativeAdImageSize = NativeAdImageSize.SIZE_150X150
 ): Promise<NativeAdDetails[]> {
   return RNStartIoNativeSdk.loadNativeAds(numberOfAds, primaryImageSize, secondaryImageSize);
 }
