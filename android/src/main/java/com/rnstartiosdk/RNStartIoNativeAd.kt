@@ -2,6 +2,8 @@ package com.rnstartiosdk
 
 import android.util.Log
 import android.view.View
+import androidx.annotation.Keep
+import com.facebook.common.internal.DoNotStrip
 import com.facebook.react.uimanager.ThemedReactContext
 import com.margelo.nitro.rnstartiosdk.CampaignAction
 import com.margelo.nitro.rnstartiosdk.HybridRNStartIoNativeAdSpec
@@ -10,6 +12,8 @@ import com.startapp.sdk.ads.nativead.StartAppNativeAd
 import com.startapp.sdk.adsbase.Ad
 import com.startapp.sdk.adsbase.adlisteners.AdEventListener
 
+@DoNotStrip
+@Keep
 class RNStartIoNativeAd(val context: ThemedReactContext): HybridRNStartIoNativeAdSpec() {
     private companion object {
         val LOG_TAG: String = RNStartIoNativeAd::class.java.simpleName

@@ -2,6 +2,8 @@ package com.rnstartiosdk
 
 import android.util.Log
 import android.view.View
+import androidx.annotation.Keep
+import com.facebook.common.internal.DoNotStrip
 import com.facebook.react.uimanager.ThemedReactContext
 import com.margelo.nitro.rnstartiosdk.BannerFormat
 import com.margelo.nitro.rnstartiosdk.HybridRNStartIoBannerSpec
@@ -15,6 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
+@DoNotStrip
+@Keep
 class RNStartIoBanner(val context: ThemedReactContext) : HybridRNStartIoBannerSpec() {
     private companion object {
         val LOG_TAG: String = RNStartIoBanner::class.java.simpleName

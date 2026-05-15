@@ -1,6 +1,7 @@
 package com.rnstartiosdk
 
 import android.util.Log
+import androidx.annotation.Keep
 import com.margelo.nitro.NitroModules.Companion.applicationContext
 import com.margelo.nitro.core.Promise
 import com.margelo.nitro.rnstartiosdk.AdResultType
@@ -14,6 +15,7 @@ import com.startapp.sdk.adsbase.adlisteners.AdDisplayListener
 import com.startapp.sdk.adsbase.adlisteners.AdEventListener
 import kotlinx.coroutines.flow.MutableStateFlow
 import androidx.core.content.edit
+import com.facebook.common.internal.DoNotStrip
 import com.margelo.nitro.rnstartiosdk.AdPreferenceGender
 import com.margelo.nitro.rnstartiosdk.CampaignAction
 import com.margelo.nitro.rnstartiosdk.NativeAdDetails
@@ -22,6 +24,8 @@ import com.startapp.sdk.ads.nativead.StartAppNativeAd
 import com.startapp.sdk.adsbase.SDKAdPreferences
 import kotlin.collections.isNotEmpty
 
+@DoNotStrip
+@Keep
 class RNStartIoSdk : HybridRNStartIoSdkSpec() {
     private companion object {
         val LOG_TAG: String = RNStartIoSdk::class.java.simpleName

@@ -1,12 +1,16 @@
 package com.rnstartiosdk
 
 import android.view.View
+import androidx.annotation.Keep
+import com.facebook.common.internal.DoNotStrip
 import com.facebook.react.uimanager.ThemedReactContext
 import com.margelo.nitro.rnstartiosdk.HybridRNStartIoNativeAdTouchAreaSpec
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@DoNotStrip
+@Keep
 class RNStartIoNativeAdTouchArea(val context: ThemedReactContext) : HybridRNStartIoNativeAdTouchAreaSpec() {
     private companion object {
         val LOG_TAG: String = RNStartIoNativeAdTouchArea::class.java.simpleName
