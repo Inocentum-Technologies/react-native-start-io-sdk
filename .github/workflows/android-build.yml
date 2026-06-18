@@ -43,7 +43,7 @@ jobs:
       matrix:
         arch: [new]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies (bun)
